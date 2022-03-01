@@ -1,0 +1,4 @@
+# Created at 2022-02-28T15:43:52.941
+Boot Manifest-JAR contains absolute paths in classpath 'D:\Workspace\Amazon_Relay_Compare_TR_To_Booking\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+

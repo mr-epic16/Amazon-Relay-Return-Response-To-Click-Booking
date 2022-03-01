@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [Suite]">
+  <test thread-count="5" verbose="0" name="Test(failed)">
+    <parameter name="password" value="wowtruck"/>
+    <parameter name="username" value="mohanavelk@wowtruck.in"/>
+    <classes>
+      <class name="amazon.ExecuteClass">
+        <methods>
+          <include name="amazon_relay" invocation-numbers="0"/>
+        </methods>
+      </class> <!-- amazon.ExecuteClass -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->
