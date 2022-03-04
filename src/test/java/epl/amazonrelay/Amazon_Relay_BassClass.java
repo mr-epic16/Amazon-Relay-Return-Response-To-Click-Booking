@@ -1,5 +1,7 @@
 package epl.amazonrelay;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -97,6 +99,11 @@ public class Amazon_Relay_BassClass {
 	public static void click() {
 		a = new Actions(driver);
 		a.click().perform();
+	}
+
+	public static void fllText(WebElement target, String keys) {
+		a = new Actions(driver);
+		a.sendKeys(target, keys).perform();
 	}
 
 	public static void screenShot() throws IOException {

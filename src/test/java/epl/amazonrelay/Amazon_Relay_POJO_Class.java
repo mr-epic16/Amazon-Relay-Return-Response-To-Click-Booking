@@ -207,4 +207,19 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 				"mohanavelk@wowtruck.in", "wowtruck" } };
 
 	}
+
+	@FindBy(xpath = "(//*[@class='css-mah6cr'])[3]")
+	private WebElement clickMoreBtn;
+
+	public WebElement getClickMoreBtn() {
+		return clickMoreBtn;
+	}
+
+	@FindBy(xpath = "//*[@class='css-dsf1ob']/div[3]/div[1]/div[1]/fieldset/div[1]/div/div/div/div/div/input")
+	private WebElement PickEndBtn;
+
+	public WebElement getPickEndBtn() {
+		return PickEndBtn;
+	}
+
 }
