@@ -65,8 +65,8 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 	static LinkedList<Integer> set_click_BTN = new LinkedList<Integer>();
 
 	public static void launching(String url) {
-		// launchBrowser("chrome");
-		chromeHeadless();
+		launchBrowser("chrome");
+		// chromeHeadless();
 		launchUrl(url);
 	}
 
@@ -589,9 +589,9 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 								WebElement until2 = wait1
 										.until(ExpectedConditions.elementToBeClickable(p.getNoClick()));
 								jsClick(until2);
-								String text = until2.getText();
+								
+								String text = p.getNoClick().getText();
 								System.out.println("Booking confirm decision button clicked : " + text);
-
 							}
 						}
 					}
