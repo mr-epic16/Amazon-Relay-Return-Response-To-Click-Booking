@@ -82,13 +82,10 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		fillTheText(p.getPassword(), Password);
 
 		clickTheButton(p.getLogin());
-		threadSleep(2000);
 
-		try {
-			jsClick(p.getLoadboard());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		WebDriverWait loadboard_Wait = new WebDriverWait(driver, 10);
+		WebElement until3 = loadboard_Wait.until(ExpectedConditions.elementToBeClickable(p.getLoadboard()));
+		jsClick(until3);
 
 		jsClick(p.getSearch());
 
@@ -585,7 +582,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 									.until(ExpectedConditions.visibilityOfAllElements(ClickBooking));
 							WebElement webElement2 = until.get(actual_index);
 							jsClick(webElement2);
-							System.out.println("Clicked Booking Button : " + i);
+							System.out.println("Booking clicked button : " + i);
 
 							/* To Click Yes or No button for Booking Confirmation */
 							if (true) {
@@ -593,7 +590,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 										.until(ExpectedConditions.elementToBeClickable(p.getNoClick()));
 								jsClick(until2);
 								String text = until2.getText();
-								System.out.println("Confirm Booking Decision Button : " + text);
+								System.out.println("Booking confirm decision button clicked : " + text);
 
 							}
 						}

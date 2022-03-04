@@ -5,9 +5,7 @@
 	<groupId>Amazon_Relay_Production</groupId>
 	<artifactId>Amazon_Relay_Production</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<properties>
-		<suiteXmlFile>testng.xml</suiteXmlFile>
-	</properties>
+	<!-- <properties> <suiteXmlFile>testng.xml</suiteXmlFile> </properties> -->
 	<dependencies>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -34,20 +32,6 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>1.3</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>4.3.0</version>
@@ -70,38 +54,30 @@
 			<artifactId>poi</artifactId>
 			<version>5.0.0</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
 			<version>5.0.0</version>
 		</dependency>
-
 	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M5</version>
-
+				<version>2.21.0</version>
 				<configuration>
 					<suiteXmlFiles>
-						testng.xml
+						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<properties>
+						<property>
+							<name>usedefaultlisteners</name>
+							<key>false</key>
+						</property>
+					</properties>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
