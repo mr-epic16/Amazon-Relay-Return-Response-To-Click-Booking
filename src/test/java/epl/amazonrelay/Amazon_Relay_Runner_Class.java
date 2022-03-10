@@ -1,5 +1,6 @@
 package epl.amazonrelay;
 
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 public class Amazon_Relay_Runner_Class extends Amazon_Relay_Scrept_Class {
@@ -9,9 +10,9 @@ public class Amazon_Relay_Runner_Class extends Amazon_Relay_Scrept_Class {
 		login(userName, Password);
 	}
 
-	// @AfterClass
-	// private void quit_Browser() {
-	// closeBrowser();
-	// }
+	@AfterClass
+	private void quit_Browser() {
+		closeBrowser();
+	}
 
 }
