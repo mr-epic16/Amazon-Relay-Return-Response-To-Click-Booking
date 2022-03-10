@@ -18,6 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -92,6 +93,12 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		navigateRefresh();
 
 		jsClick(p.getClickMoreBtn());
+
+		// clickTheButton(p.getPickEndBtn());
+		// clickTheButton(p.getPickHourMinute());
+		// fillTheText(p.getPickHourMinute(), "23:59");
+		// WebElement pickHourMinute2 = p.getPickHourMinute();
+		// pickHourMinute2.sendKeys(Keys.RETURN);
 
 		clickTheButton(p.getPickEndBtn());
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -396,7 +403,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
 				String string2 = set_drop5_address.get(indexOf1);
 				if (!string2.equalsIgnoreCase(substring)) {
-
 					set_drop5_address.set(indexOf1, substring);
 				}
 
@@ -548,7 +554,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					System.out.println("TR No : " + string2);
 
 					/* get booking actual index from amazon relay to click */
-					int actual_index = 0;
+					int actual_booking_index = 0;
 					String TR_State = null;
 					String trState = "TR IS NOT THERE";
 					List<WebElement> get_CureentTR_Appears = p.getAll_TR_ID();
@@ -558,7 +564,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 						String substring = tRId.substring(3);
 
 						if (substring.equalsIgnoreCase(string2)) {
-							actual_index = i1;
+							actual_booking_index = i1;
 							TR_State = "TR IS THERE";
 							break;
 						} else {
@@ -569,29 +575,31 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					/* To check TR present or not */
 					if (!TR_State.equals(trState)) {
 
-						System.out.println("Booking_TR_Index : " + actual_index);
+						System.out.println("Booking_TR_Index : " + actual_booking_index);
 
 						Object object = jsonresponse.getBody().getObject().getJSONObject("response").get("status");
 						String string12 = object.toString();
 
 						/* to click return status code from API and Book button Click */
-						if (string12.equals("0")) {
+						if (string12.equals("1")) {
 							WebDriverWait wait1 = new WebDriverWait(driver, 10);
 							List<WebElement> ClickBooking = p.getClickBooking();
 							List<WebElement> until = wait1
 									.until(ExpectedConditions.visibilityOfAllElements(ClickBooking));
-							WebElement webElement2 = until.get(actual_index);
+							WebElement webElement2 = until.get(actual_booking_index);
 							jsClick(webElement2);
-							System.out.println("Booking clicked button : " + i);
+							System.out.println("Booking button clicked : " + i);
 
 							/* To Click Yes or No button for Booking Confirmation */
 							if (true) {
 								WebElement until2 = wait1
-										.until(ExpectedConditions.elementToBeClickable(p.getNoClick()));
-								jsClick(until2);
+										.until(ExpectedConditions.elementToBeClickable(p.getYesClick()));
+								String text = until2.getText();
+								screenShot();
+								System.out.println("Booking confirm button clicked : " + text);
+								jsClick(p.getNoClick());
+								screenShot();
 
-								String text = p.getNoClick().getText();
-								System.out.println("Booking confirm decision button clicked : " + text);
 							}
 						}
 					}

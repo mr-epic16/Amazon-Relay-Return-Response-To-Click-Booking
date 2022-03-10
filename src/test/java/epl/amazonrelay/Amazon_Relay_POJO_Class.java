@@ -173,7 +173,7 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 	@FindBy(xpath = "//*[@class='stop-detail-row css-1mtwub4']/div[1]/div")
 	private List<WebElement> pickup_allData;
 
-	@FindBy(className = "css-hhceur")
+	@FindBy(xpath = "//*[@class='css-hgtzg0']/button[1]/span")
 	private WebElement NoClick;
 
 	public WebElement getNoClick() {
@@ -186,7 +186,7 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 
 	@FindBy(xpath = "//*[@class='css-6pca0d']/span[2]/button/span")
 	private List<WebElement> ClickBooking;
-	@FindBy(className = "css-123rhkh")
+	@FindBy(xpath = "//*[@class='css-hgtzg0']/button[2]/span")
 	private WebElement YesClick;
 
 	public WebElement getYesClick() {
@@ -222,4 +222,31 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 		return PickEndBtn;
 	}
 
+	public WebElement getStoptype() {
+		return Stoptype;
+	}
+
+	public WebElement getStopvalue() {
+		return Stopvalue;
+	}
+
+	@FindBy(xpath = "//*[@class='css-1vcna31']")
+	private WebElement Stoptype;
+
+	@FindBy(xpath = "//*[@class='css-1lidxgu']/button[2]/div")
+	private WebElement Stopvalue;
+
+	@FindBy(xpath = "//*[@class='css-58uizd']/div[1]/fieldset/div[2]/div/div/div/div/div/input")
+	private WebElement pickHourMinute;
+
+	public WebElement getPickHourMinute() {
+		return pickHourMinute;
+	}
+
+	@FindBy(xpath = "(//*[contains(text(),'Load Board')])[5]")
+	private WebElement NewLoadboard;
+
+	public WebElement getNewLoadboard() {
+		return NewLoadboard;
+	}
 }
