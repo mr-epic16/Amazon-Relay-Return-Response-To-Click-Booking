@@ -137,6 +137,44 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 	private List<WebElement> clickthird;
 	@FindBy(xpath = "//*[@class='wo-card-details']/div[4]/div/div/span/span")
 	private List<WebElement> clickfourth;
+	@FindBy(xpath = "//*[@class='wo-card-details']/div[5]/div/div/span/span")
+	private List<WebElement> click_five;
+
+	public List<WebElement> getClick_five() {
+		return click_five;
+	}
+
+	public List<WebElement> getClick_six() {
+		return click_six;
+	}
+
+	public List<WebElement> getClick_seven() {
+		return click_seven;
+	}
+
+	public List<WebElement> getClick_eight() {
+		return click_eight;
+	}
+
+	@FindBy(xpath = "//*[@class='wo-card-details']/div[6]/div/div/span/span")
+	private List<WebElement> click_six;
+	@FindBy(xpath = "//*[@class='wo-card-details']/div[7]/div/div/span/span")
+	private List<WebElement> click_seven;
+	@FindBy(xpath = "//*[@class='wo-card-details']/div[8]/div/div/span/span")
+	private List<WebElement> click_eight;
+	@FindBy(xpath = "//*[@class='wo-card-details']/div[9]/div/div/span/span")
+	private List<WebElement> click_nine;
+
+	public List<WebElement> getClick_nine() {
+		return click_nine;
+	}
+
+	public List<WebElement> getClick_ten() {
+		return click_ten;
+	}
+
+	@FindBy(xpath = "//*[@class='wo-card-details']/div[10]/div/div/span/span")
+	private List<WebElement> click_ten;
 
 	@FindBy(xpath = "//*[@class='wo-card-header']/div/div/div[4]/div/span/span/div[1]/span/div")
 	private List<WebElement> all_Truck;
@@ -193,13 +231,6 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 		return YesClick;
 	}
 
-	@FindBy(xpath = "//*[@class='css-1yhpeek']")
-	private List<WebElement> Pagination;
-
-	public List<WebElement> getPagination() {
-		return Pagination;
-	}
-
 	@DataProvider(name = "data")
 	private Object[][] credentials() {
 		return new Object[][] { {
@@ -221,27 +252,5 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 	public WebElement getPickEndBtn() {
 		return PickEndBtn;
 	}
-	//
-	// public WebElement getStoptype() {
-	// return Stoptype;
-	// }
-	//
-	// public WebElement getStopvalue() {
-	// return Stopvalue;
-	// }
-	//
-	// @FindBy(xpath = "//*[@class='css-1vcna31']")
-	// private WebElement Stoptype;
-	//
-	// @FindBy(xpath = "//*[@class='css-1lidxgu']/button[2]/div")
-	// private WebElement Stopvalue;
-	//
-	// @FindBy(xpath =
-	// "//*[@class='css-58uizd']/div[1]/fieldset/div[2]/div/div/div/div/div/input")
-	// private WebElement pickHourMinute;
-	//
-	// public WebElement getPickHourMinute() {
-	// return pickHourMinute;
-	// }
 
 }

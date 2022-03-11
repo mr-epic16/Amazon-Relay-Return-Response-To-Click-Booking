@@ -1,16 +1,10 @@
 package epl.amazonrelay;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -20,18 +14,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-@SuppressWarnings("unused")
 public class Amazon_Relay_BassClass {
 	public static WebDriver driver;
-
-	public static Actions a;
-
-	public static Select s;
 
 	public static TakesScreenshot tk;
 
@@ -89,23 +76,6 @@ public class Amazon_Relay_BassClass {
 
 	}
 
-	public static void getTheAttribute(WebElement e, String value) {
-
-		String attribute = e.getAttribute(value);
-		System.out.println(attribute);
-
-	}
-
-	public static void click() {
-		a = new Actions(driver);
-		a.click().perform();
-	}
-
-	public static void fllText(WebElement target, String keys) {
-		a = new Actions(driver);
-		a.sendKeys(target, keys).perform();
-	}
-
 	public static void screenShot() throws IOException {
 
 		tk = (TakesScreenshot) driver;
@@ -125,17 +95,6 @@ public class Amazon_Relay_BassClass {
 
 	public static void closeBrowser() {
 		driver.quit();
-
-	}
-
-	public static void threadSleep(long seconds) {
-
-		try {
-			Thread.sleep(seconds);
-		} catch (InterruptedException e) {
-
-			e.printStackTrace();
-		}
 
 	}
 
