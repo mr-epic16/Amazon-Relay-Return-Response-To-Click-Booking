@@ -221,32 +221,27 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 	public WebElement getPickEndBtn() {
 		return PickEndBtn;
 	}
+	//
+	// public WebElement getStoptype() {
+	// return Stoptype;
+	// }
+	//
+	// public WebElement getStopvalue() {
+	// return Stopvalue;
+	// }
+	//
+	// @FindBy(xpath = "//*[@class='css-1vcna31']")
+	// private WebElement Stoptype;
+	//
+	// @FindBy(xpath = "//*[@class='css-1lidxgu']/button[2]/div")
+	// private WebElement Stopvalue;
+	//
+	// @FindBy(xpath =
+	// "//*[@class='css-58uizd']/div[1]/fieldset/div[2]/div/div/div/div/div/input")
+	// private WebElement pickHourMinute;
+	//
+	// public WebElement getPickHourMinute() {
+	// return pickHourMinute;
+	// }
 
-	public WebElement getStoptype() {
-		return Stoptype;
-	}
-
-	public WebElement getStopvalue() {
-		return Stopvalue;
-	}
-
-	@FindBy(xpath = "//*[@class='css-1vcna31']")
-	private WebElement Stoptype;
-
-	@FindBy(xpath = "//*[@class='css-1lidxgu']/button[2]/div")
-	private WebElement Stopvalue;
-
-	@FindBy(xpath = "//*[@class='css-58uizd']/div[1]/fieldset/div[2]/div/div/div/div/div/input")
-	private WebElement pickHourMinute;
-
-	public WebElement getPickHourMinute() {
-		return pickHourMinute;
-	}
-
-	@FindBy(xpath = "(//*[contains(text(),'Load Board')])[5]")
-	private WebElement NewLoadboard;
-
-	public WebElement getNewLoadboard() {
-		return NewLoadboard;
-	}
 }
