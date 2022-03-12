@@ -79,8 +79,8 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 	private static LinkedList<String> json_AllData = new LinkedList<String>();
 
 	public static void launching(String url) {
-		launchBrowser("chrome");
-		// chromeHeadless();
+		// launchBrowser("chrome");
+		chromeHeadless();
 		launchUrl(url);
 	}
 
@@ -105,17 +105,17 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 		jsClick(p.getClickMoreBtn());
 
-		// clickTheButton(p.getPickEndBtn());
-		// SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		// Calendar c = Calendar.getInstance();
-		// c.setTime(new Date());
-		// c.add(Calendar.DATE, 4);
-		// String output = sdf.format(c.getTime());
-		//
-		// fillTheText(p.getPickEndBtn(), output);
-		//
-		// WebElement pickEndBtn2 = p.getPickEndBtn();
-		// pickEndBtn2.sendKeys(Keys.RETURN);
+		clickTheButton(p.getPickEndBtn());
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		c.add(Calendar.DATE, 4);
+		String output = sdf.format(c.getTime());
+
+		fillTheText(p.getPickEndBtn(), output);
+
+		WebElement pickEndBtn2 = p.getPickEndBtn();
+		pickEndBtn2.sendKeys(Keys.RETURN);
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
