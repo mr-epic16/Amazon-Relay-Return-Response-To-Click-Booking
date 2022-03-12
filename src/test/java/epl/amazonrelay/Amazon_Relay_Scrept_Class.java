@@ -31,49 +31,52 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 	/* Store all pickup d1 d2 d3 d4 d5 addresses */
-	static LinkedList<String> get_all_pickup_data = new LinkedList<String>();
+	private static LinkedList<String> get_all_pickup_data = new LinkedList<String>();
 
-	/* Create pick up & d1 d2 d3 d4 d5 lists and Store all values */
-	static LinkedList<String> set_pickup_address = new LinkedList<String>();
-	static LinkedList<String> set_drop1_address = new LinkedList<String>();
-	static LinkedList<String> set_drop2_address = new LinkedList<String>();
-	static LinkedList<String> set_drop3_address = new LinkedList<String>();
-	static LinkedList<String> set_drop4_address = new LinkedList<String>();
-	static LinkedList<String> set_drop5_address = new LinkedList<String>();
-	static LinkedList<String> set_drop6_address = new LinkedList<String>();
-	static LinkedList<String> set_drop7_address = new LinkedList<String>();
-	static LinkedList<String> set_drop8_address = new LinkedList<String>();
-	static LinkedList<String> set_drop9_address = new LinkedList<String>();
-	static LinkedList<String> set_drop10_address = new LinkedList<String>();
-	static LinkedList<String> set_drop11_address = new LinkedList<String>();
-	static LinkedList<String> set_drop12_address = new LinkedList<String>();
-	static LinkedList<String> set_drop13_address = new LinkedList<String>();
-	static LinkedList<String> set_drop14_address = new LinkedList<String>();
-	static LinkedList<String> set_drop15_address = new LinkedList<String>();
+	/* Create pick up & all drops lists and Store all values */
+	private static LinkedList<String> set_pickup_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop1_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop2_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop3_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop4_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop5_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop6_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop7_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop8_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop9_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop10_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop11_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop12_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop13_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop14_address = new LinkedList<String>();
+	private static LinkedList<String> set_drop15_address = new LinkedList<String>();
 
 	/* Store pickup truck length */
-	static LinkedList<String> set_pickup_truck = new LinkedList<String>();
+	private static LinkedList<String> set_pickup_truck = new LinkedList<String>();
 
 	/* Store pickup arrival date */
-	static LinkedList<String> set_arrival_pickup_date = new LinkedList<String>();
+	private static LinkedList<String> set_arrival_pickup_date = new LinkedList<String>();
 
 	/* Store price all pickup ad drop */
-	static LinkedList<String> set_price_alldata = new LinkedList<String>();
+	private static LinkedList<String> set_price_alldata = new LinkedList<String>();
 
 	/* TR Adding */
-	static LinkedList<String> set_TR_ID = new LinkedList<String>();
-	static LinkedList<String> get_TR_ID_Two = new LinkedList<String>();
-	static LinkedList<String> set_TR_ID_Two = new LinkedList<String>();
+	private static LinkedList<String> set_TR_ID = new LinkedList<String>();
+	private static LinkedList<String> get_TR_ID_Two = new LinkedList<String>();
+	private static LinkedList<String> set_TR_ID_Two = new LinkedList<String>();
 
 	/* Store all pickup & drop id */
-	static LinkedList<String> set_allPickup_ID = new LinkedList<String>();
+	private static LinkedList<String> set_allPickup_ID = new LinkedList<String>();
 
 	/* Separate id pick up */
 
-	static LinkedList<String> set_pickupId = new LinkedList<String>();
+	private static LinkedList<String> set_pickupId = new LinkedList<String>();
 
 	/* Store Multiple TR index */
-	static LinkedList<Integer> set_click_BTN = new LinkedList<Integer>();
+	private static LinkedList<Integer> set_click_BTN = new LinkedList<Integer>();
+
+	/* store json format data */
+	private static LinkedList<String> json_AllData = new LinkedList<String>();
 
 	public static void launching(String url) {
 		// launchBrowser("chrome");
@@ -451,12 +454,21 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				String string2 = set_drop5_address.get(indexOf1);
+				if (!string2.equalsIgnoreCase(substring)) {
+					set_drop5_address.set(indexOf1, substring);
+				}
+
+			} else if (address_Index.equalsIgnoreCase("7")) {
+				String substring = string.substring(6);
+				String last111 = set_pickup_address.getLast();
+				int indexOf1 = set_pickup_address.lastIndexOf(last111);
 				String string2 = set_drop6_address.get(indexOf1);
 				if (!string2.equalsIgnoreCase(substring)) {
 					set_drop6_address.set(indexOf1, substring);
 				}
 
-			} else if (address_Index.equalsIgnoreCase("7")) {
+			} else if (address_Index.equalsIgnoreCase("8")) {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
@@ -465,7 +477,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					set_drop7_address.set(indexOf1, substring);
 				}
 
-			} else if (address_Index.equalsIgnoreCase("8")) {
+			} else if (address_Index.equalsIgnoreCase("9")) {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
@@ -474,7 +486,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					set_drop8_address.set(indexOf1, substring);
 				}
 
-			} else if (address_Index.equalsIgnoreCase("9")) {
+			} else if (address_Index.equalsIgnoreCase("10")) {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
@@ -483,7 +495,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					set_drop9_address.set(indexOf1, substring);
 				}
 
-			} else if (address_Index.equalsIgnoreCase("10")) {
+			} else if (address_Index.equalsIgnoreCase("11")) {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
@@ -492,7 +504,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					set_drop10_address.set(indexOf1, substring);
 				}
 
-			} else if (address_Index.equalsIgnoreCase("11")) {
+			} else if (address_Index.equalsIgnoreCase("12")) {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
@@ -501,7 +513,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					set_drop11_address.set(indexOf1, substring);
 				}
 
-			} else if (address_Index.equalsIgnoreCase("12")) {
+			} else if (address_Index.equalsIgnoreCase("13")) {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
@@ -510,7 +522,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					set_drop12_address.set(indexOf1, substring);
 				}
 
-			} else if (address_Index.equalsIgnoreCase("13")) {
+			} else if (address_Index.equalsIgnoreCase("14")) {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
@@ -519,7 +531,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					set_drop13_address.set(indexOf1, substring);
 				}
 
-			} else if (address_Index.equalsIgnoreCase("14")) {
+			} else if (address_Index.equalsIgnoreCase("15")) {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
@@ -528,7 +540,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					set_drop14_address.set(indexOf1, substring);
 				}
 
-			} else if (address_Index.equalsIgnoreCase("15")) {
+			} else if (address_Index.equalsIgnoreCase("16")) {
 				String substring = string.substring(6);
 				String last111 = set_pickup_address.getLast();
 				int indexOf1 = set_pickup_address.lastIndexOf(last111);
@@ -538,7 +550,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 				}
 
 			}
-
 		}
 
 		/* insert the TR Number in List */
@@ -549,7 +560,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		}
 		System.out.println("Second Tr : " + set_TR_ID_Two);
 		/* Json Formating Convert to All Linked Lists */
-		LinkedList<String> json_AllData = new LinkedList<String>();
+
 		try {
 			for (int j = 0; j < set_allPickup_ID.size(); j++) {
 
@@ -567,36 +578,36 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 				JSONArray ja = new JSONArray();
 
 				m = new LinkedHashMap<>(1);
-				String string3 = set_drop1_address.get(j);
-				if (string3 != "N/A") {
+				String string1d = set_drop1_address.get(j);
+				if (string1d != "N/A") {
 					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string3);
+					m.put("drop_address", string1d);
 					ja.add(m);
 				}
-				String string4 = set_drop2_address.get(j);
-				if (string4 != "N/A") {
+				String string2d = set_drop2_address.get(j);
+				if (string2d != "N/A") {
 					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string4);
-					ja.add(m);
-				}
-
-				String string5 = set_drop3_address.get(j);
-				if (string5 != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string5);
+					m.put("drop_address", string2d);
 					ja.add(m);
 				}
 
-				String string6 = set_drop4_address.get(j);
-				if (string6 != "N/A") {
+				String string3d = set_drop3_address.get(j);
+				if (string3d != "N/A") {
 					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string6);
+					m.put("drop_address", string3d);
 					ja.add(m);
 				}
-				String string61 = set_drop5_address.get(j);
-				if (string61 != "N/A") {
+
+				String string4d = set_drop4_address.get(j);
+				if (string4d != "N/A") {
 					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string61);
+					m.put("drop_address", string4d);
+					ja.add(m);
+				}
+				String string5d = set_drop5_address.get(j);
+				if (string5d != "N/A") {
+					m = new LinkedHashMap<>(1);
+					m.put("drop_address", string5d);
 					ja.add(m);
 				}
 				String string6d = set_drop6_address.get(j);
@@ -703,23 +714,15 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			String Drop04_Address = set_drop4_address.get(i);
 			String Drop05_Address = set_drop5_address.get(i);
 			String Drop06_Address = set_drop6_address.get(i);
-
 			String Drop07_Address = set_drop7_address.get(i);
-
 			String Drop08_Address = set_drop8_address.get(i);
-
 			String Drop09_Address = set_drop9_address.get(i);
-
 			String Drop10_Address = set_drop10_address.get(i);
 			String Drop11_Address = set_drop11_address.get(i);
-
 			String Drop12_Address = set_drop12_address.get(i);
-
 			String Drop13_Address = set_drop13_address.get(i);
-
 			String Drop14_Address = set_drop14_address.get(i);
 			String Drop15_Address = set_drop15_address.get(i);
-
 			String Truck_Length = set_pickup_truck.get(i);
 			String Price = set_price_alldata.get(i);
 			String valueOf = String.valueOf(i);
@@ -857,4 +860,5 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		workbook.write(out);
 		out.close();
 	}
+
 }
