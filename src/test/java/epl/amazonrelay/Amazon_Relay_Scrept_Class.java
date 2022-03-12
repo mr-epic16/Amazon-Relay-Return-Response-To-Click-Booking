@@ -101,7 +101,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		jsClick(loadboard_Wait);
 
 		jsClick(p.getSearch());
-
+		screenShot();
 		navigateRefresh();
 
 		jsClick(p.getClickMoreBtn());
