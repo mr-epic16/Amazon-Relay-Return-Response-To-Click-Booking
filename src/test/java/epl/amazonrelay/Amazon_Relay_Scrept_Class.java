@@ -79,8 +79,8 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 	private static LinkedList<String> json_AllData = new LinkedList<String>();
 
 	public static void launching(String url) {
-		// launchBrowser("chrome");
-		chromeHeadless();
+		launchBrowser("chrome");
+		// chromeHeadless();
 		launchUrl(url);
 	}
 
@@ -101,22 +101,21 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		jsClick(loadboard_Wait);
 
 		jsClick(p.getSearch());
-		screenShot();
 		navigateRefresh();
 
 		jsClick(p.getClickMoreBtn());
 
-		clickTheButton(p.getPickEndBtn());
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date());
-		c.add(Calendar.DATE, 4);
-		String output = sdf.format(c.getTime());
-
-		fillTheText(p.getPickEndBtn(), output);
-
-		WebElement pickEndBtn2 = p.getPickEndBtn();
-		pickEndBtn2.sendKeys(Keys.RETURN);
+		// clickTheButton(p.getPickEndBtn());
+		// SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		// Calendar c = Calendar.getInstance();
+		// c.setTime(new Date());
+		// c.add(Calendar.DATE, 4);
+		// String output = sdf.format(c.getTime());
+		//
+		// fillTheText(p.getPickEndBtn(), output);
+		//
+		// WebElement pickEndBtn2 = p.getPickEndBtn();
+		// pickEndBtn2.sendKeys(Keys.RETURN);
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -353,7 +352,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			for (int i1 = 0; i1 < get_All_TR_ID.size(); i1++) {
 				WebElement webElement1 = get_All_TR_ID.get(i1);
 				String tRId = webElement1.getText();
-
 				String substring = tRId.substring(3);
 				set_TR_ID.add(substring);
 
