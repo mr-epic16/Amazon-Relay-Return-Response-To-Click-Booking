@@ -197,6 +197,13 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 	@FindBy(xpath = "//*[@class='css-uz15kn']/div/div[2]/div[1]/div[3]//span/span")
 	private List<WebElement> arrival_pickup_date;
 
+	public List<WebElement> getDate_CompareToClick() {
+		return date_compare_click;
+	}
+
+	@FindBy(xpath = "//*[@class='wo-card']/div/div/div/div/div[1]/div[2]/p/span")
+	private List<WebElement> date_compare_click;
+
 	public List<WebElement> getAll_TR_ID() {
 		return All_TR_ID;
 	}
@@ -210,6 +217,14 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 
 	@FindBy(xpath = "//*[@class='stop-detail-row css-1mtwub4']/div[1]/div")
 	private List<WebElement> pickup_allData;
+	// *[@class='load-accordion__row']/div[2]/div/div/div/div/div[3]
+
+	public List<WebElement> getallData() {
+		return allData;
+	}
+
+	@FindBy(xpath = "//*[@class='load-accordion__row']/div[2]/div/div/div/div/div[3]/div/span/span")
+	private List<WebElement> allData;
 
 	@FindBy(xpath = "//*[@class='css-hgtzg0']/button[1]/span")
 	private WebElement NoClick;

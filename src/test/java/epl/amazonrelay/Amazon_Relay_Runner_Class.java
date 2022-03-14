@@ -8,6 +8,7 @@ public class Amazon_Relay_Runner_Class extends Amazon_Relay_Scrept_Class {
 	private void amazon_relay_login(String url, String userName, String Password) throws Exception {
 		launching(url);
 		login(userName, Password);
+
 	}
 
 	@AfterClass

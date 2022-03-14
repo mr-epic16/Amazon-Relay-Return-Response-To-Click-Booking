@@ -109,14 +109,23 @@ public class Amazon_Relay_BassClass {
 	public static void chromeHeadless() {
 		WebDriverManager.chromedriver().setup();
 		chromeOptions = new ChromeOptions();
-
 		chromeOptions.addArguments("--headless");
 		chromeOptions.addArguments("--no-sandbox");
 		chromeOptions.addArguments("--disable-dev-shm-usage");
 		chromeOptions.addArguments("--disable-gpu");
 		chromeOptions.addArguments("window-size=1400,2100");
-
 		driver = new ChromeDriver(chromeOptions);
+
+	}
+
+	public static void address_Arrangements(String values, LinkedList<String> pickup, LinkedList<String> drop) {
+		String substring = values.substring(6);
+		String last111 = pickup.getLast();
+		int indexOf1 = pickup.lastIndexOf(last111);
+		String string2 = drop.get(indexOf1);
+		if (!string2.equalsIgnoreCase(substring)) {
+			drop.set(indexOf1, substring);
+		}
 
 	}
 }

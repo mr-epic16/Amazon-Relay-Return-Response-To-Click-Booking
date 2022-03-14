@@ -18,7 +18,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -82,10 +81,12 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		// launchBrowser("chrome");
 		chromeHeadless();
 		launchUrl(url);
+
 	}
 
 	@SuppressWarnings({ "unchecked", "deprecation", "resource", "unused", })
 	public static void login(String userName, String Password) throws Exception {
+
 		sleepTime();
 		Amazon_Relay_POJO_Class p = new Amazon_Relay_POJO_Class();
 		WebDriverWait wait_all_Elements = new WebDriverWait(driver, 10);
@@ -104,18 +105,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		navigateRefresh();
 
 		jsClick(p.getClickMoreBtn());
-
-		clickTheButton(p.getPickEndBtn());
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date());
-		c.add(Calendar.DATE, 4);
-		String output = sdf.format(c.getTime());
-
-		fillTheText(p.getPickEndBtn(), output);
-
-		WebElement pickEndBtn2 = p.getPickEndBtn();
-		pickEndBtn2.sendKeys(Keys.RETURN);
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -136,9 +125,26 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 						"Price" });
 		int rowid = 0;
 
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM");
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		c.add(Calendar.DATE, 2);
+		String Date_Compare_Click = sdf.format(c.getTime());
+
+		int head_Click = 0;
 		List<WebElement> firstclick2 = p.getFirstclick();
+		List<WebElement> date_CompareToClick = p.getDate_CompareToClick();
+
 		for (int i = 0; i < firstclick2.size(); i++) {
+
 			WebElement webElement = firstclick2.get(i);
+			WebElement webElement2 = date_CompareToClick.get(i);
+			String text = webElement2.getText();
+			String substring = text.substring(0, 10);
+			if (Date_Compare_Click.equals(substring)) {
+				head_Click = i;
+				break;
+			}
 			WebElement wait_First_Click = wait_all_Elements.until(ExpectedConditions.elementToBeClickable(webElement));
 			jsClick(wait_First_Click);
 		}
@@ -164,6 +170,9 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			String concat2 = pickuptext.concat(substring2);
 
 			String concat3 = concat2.concat(substring);
+			if (head_Click == i) {
+				break;
+			}
 			set_allPickup_ID.add(concat3);
 
 		}
@@ -304,10 +313,16 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 		List<WebElement> get_price = p.getPrice();
 
-		for (WebElement webElement : get_price) {
+		for (int i = 0; i < get_price.size(); i++) {
+
+			WebElement webElement = get_price.get(i);
+
 			String text = webElement.getText();
 			String replace = text.replaceAll(",", "");
 			String substring = replace.substring(1);
+			if (head_Click == i) {
+				break;
+			}
 			set_price_alldata.add(substring);
 		}
 
@@ -320,6 +335,9 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			WebElement tdata = get_allTruck.get(i11);
 			String length = tdata.getText();
 
+			if (head_Click == i11) {
+				break;
+			}
 			if (length.equals("THIRTY_FOUR_FOOT_TRUCK")) {
 				String s = "34' Truck";
 				set_pickup_truck.add(s);
@@ -339,10 +357,14 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			} else if (length.equalsIgnoreCase("SEVEN_FOOT_TRUCK_ELECTRIC_AMT")) {
 				String s = "7' Truck";
 				set_pickup_truck.add(s);
+			} else if (length.equalsIgnoreCase("TEN_FOOT_TRUCK_AMT")) {
+				String s = "10' Truck";
+				set_pickup_truck.add(s);
 			} else {
 				set_pickup_truck.add(length);
 			}
 		}
+
 		System.out.println("Pickup Truck Size : " + set_pickup_truck.size());
 
 		/* Scraping TR Id From amazon relay */
@@ -354,7 +376,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 				String tRId = webElement1.getText();
 				String substring = tRId.substring(3);
 				set_TR_ID.add(substring);
-
 			}
 		} catch (Exception e3) {
 
@@ -373,12 +394,12 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 		/* scraping all addresses like pickup, all drop from amazon */
 		List<WebElement> get_pickup_allData = p.getPickup_allData();
+		List<WebElement> getallData = p.getallData();
 
 		for (int i = 0; i < get_pickup_allData.size(); i++) {
 			WebElement get_all = get_pickup_allData.get(i);
 			String get_all_pickup = get_all.getText();
 			get_all_pickup_data.add(get_all_pickup);
-
 		}
 
 		/* dummy Size Fixed in the Lists */
@@ -413,140 +434,156 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			if (address_Index.equalsIgnoreCase("1")) {
 				String substring = string.substring(6);
 				set_pickup_address.add(substring);
+
 			} else if (address_Index.equalsIgnoreCase("2")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop1_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop1_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop1_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop1_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop1_address);
 
 			} else if (address_Index.equalsIgnoreCase("3")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop2_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop2_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop2_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop2_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop2_address);
 
 			} else if (address_Index.equalsIgnoreCase("4")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop3_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop3_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop3_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop3_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop3_address);
+
 			} else if (address_Index.equalsIgnoreCase("5")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop4_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop4_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop4_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop4_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop4_address);
 
 			} else if (address_Index.equalsIgnoreCase("6")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop5_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop5_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop5_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop5_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop5_address);
 
 			} else if (address_Index.equalsIgnoreCase("7")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop6_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop6_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop6_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop6_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop6_address);
 
 			} else if (address_Index.equalsIgnoreCase("8")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop7_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop7_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop7_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop7_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop7_address);
 
 			} else if (address_Index.equalsIgnoreCase("9")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop8_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop8_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop8_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop8_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop8_address);
 
 			} else if (address_Index.equalsIgnoreCase("10")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop9_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop9_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop9_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop9_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop9_address);
 
 			} else if (address_Index.equalsIgnoreCase("11")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop10_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop10_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop10_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop10_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop10_address);
 
 			} else if (address_Index.equalsIgnoreCase("12")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop11_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop11_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop11_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop11_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop11_address);
 
 			} else if (address_Index.equalsIgnoreCase("13")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop12_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop12_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop12_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop12_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop12_address);
 
 			} else if (address_Index.equalsIgnoreCase("14")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop13_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop13_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop13_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop13_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop13_address);
 
 			} else if (address_Index.equalsIgnoreCase("15")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop14_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop14_address.set(indexOf1, substring);
-				}
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop14_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop14_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop14_address);
 
 			} else if (address_Index.equalsIgnoreCase("16")) {
-				String substring = string.substring(6);
-				String last111 = set_pickup_address.getLast();
-				int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				String string2 = set_drop15_address.get(indexOf1);
-				if (!string2.equalsIgnoreCase(substring)) {
-					set_drop15_address.set(indexOf1, substring);
-				}
-
+				// String substring = string.substring(6);
+				// String last111 = set_pickup_address.getLast();
+				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
+				// String string2 = set_drop15_address.get(indexOf1);
+				// if (!string2.equalsIgnoreCase(substring)) {
+				// set_drop15_address.set(indexOf1, substring);
+				// }
+				address_Arrangements(string, set_pickup_address, set_drop15_address);
 			}
 		}
 
@@ -554,13 +591,13 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		for (int i = 0; i < set_click_BTN.size(); i++) {
 			Integer integer = set_click_BTN.get(i);
 			String string = get_TR_ID_Two.get(i);
+			int size2 = set_arrival_pickup_date.size();
 			set_TR_ID_Two.set(integer, string);
 		}
 		System.out.println("Second Tr : " + set_TR_ID_Two);
-		/* Json Formating Convert to All Linked Lists */
 
 		try {
-			for (int j = 0; j < set_allPickup_ID.size(); j++) {
+			for (int j = 0; j < set_arrival_pickup_date.size(); j++) {
 
 				JSONObject jo = new JSONObject();
 
