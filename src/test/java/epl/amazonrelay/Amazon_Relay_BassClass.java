@@ -93,7 +93,7 @@ public class Amazon_Relay_BassClass {
 	}
 
 	public static void sleepTime() {
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	}
 
 	public static void closeBrowser() {

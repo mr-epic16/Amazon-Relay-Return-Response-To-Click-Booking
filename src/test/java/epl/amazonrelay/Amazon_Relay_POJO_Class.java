@@ -39,9 +39,7 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 	@FindBy(xpath = "//*[@class='css-9sd94s']/div[1]/div/div/div[1]")
 	private List<WebElement> firstclick;
 
-	/*
-	 * separation data
-	 */
+	/* separation data */
 	@FindBy(className = "css-13cnl61")
 	private List<WebElement> pickupdrop;
 

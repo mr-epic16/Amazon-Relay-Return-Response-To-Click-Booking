@@ -117,7 +117,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		XSSFRow row;
 
 		// these are steps lines Excel data convention
-
 		amazonRelay_Excel.put("",
 				new Object[] { "TR_ID_One", "TR_ID_Two", "Time_Stamp", "Pickup_Address", "Drop01_Address",
 						"Drop02_Address", "Drop03_Address", "Drop04_Address", "Drop05_Address", "Drop06_Address",
@@ -130,7 +129,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		c.add(Calendar.DATE, 2);
-		String Date_Compare_Click = sdf.format(c.getTime());
+		final String Date_Compare_To_Click = sdf.format(c.getTime());
 
 		int head_Click = 0;
 		List<WebElement> firstclick2 = p.getFirstclick();
@@ -142,7 +141,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			WebElement webElement2 = date_CompareToClick.get(i);
 			String text = webElement2.getText();
 			String substring = text.substring(0, 10);
-			if (Date_Compare_Click.equals(substring)) {
+			if (Date_Compare_To_Click.equals(substring)) {
 				head_Click = i;
 				break;
 			}
@@ -178,7 +177,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		}
 		System.out.println("All head Pickup ID Size : " + set_allPickup_ID.size());
 
-		// /* scraping for pickup Id data */
+		/* scraping for pickup Id data */
 		List<WebElement> get_pickup_ID_fourLetter = p.getPickup_ID_fourLetter();
 		List<WebElement> get_pickup_price = p.getPickup_price();
 
@@ -220,8 +219,8 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			jsClick(webElement);
 
 		}
-		/* scraping all pick arrival date from amazon relay */
 
+		/* scraping all pick arrival date from amazon relay */
 		List<WebElement> get_arrival_pickup_date = p.getArrival_pickup_date();
 
 		for (int i111 = 0; i111 < get_arrival_pickup_date.size(); i111++) {
@@ -308,8 +307,8 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			jsClick(webElement);
 
 		}
-		/* scraping all price amount from amazon relay */
 
+		/* scraping all price amount from amazon relay */
 		List<WebElement> get_price = p.getPrice();
 
 		for (int i = 0; i < get_price.size(); i++) {
@@ -665,8 +664,8 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 				System.out.println("response body :" + jsonresponse.getBody());
 
 				/* To Get into return API response body isn't Body Empty */
-				String body = jsonresponse.getBody().toString();
-				if (!body.equals("{}")) {
+				String json_body = jsonresponse.getBody().toString();
+				if (!json_body.equals("{}")) {
 
 					org.json.JSONObject j = new org.json.JSONObject(datas);
 					String string = j.get("tr_number").toString();
@@ -677,7 +676,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 					/* get booking actual index from amazon relay to click */
 					int actual_booking_index = 0;
 					String TR_State = null;
-					String trState = "TR IS NOT THERE";
+					final String trState = "TR IS NOT THERE";
 					List<WebElement> get_CureentTR_Appears = p.getAll_TR_ID();
 					for (int i1 = 0; i1 < get_CureentTR_Appears.size(); i1++) {
 						WebElement webElement1 = get_CureentTR_Appears.get(i1);
@@ -698,12 +697,12 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 						System.out.println("Booking_TR_Index : " + actual_booking_index);
 
-						Object object = jsonresponse.getBody().getObject().getJSONObject("response").get("status");
-						String string12 = object.toString();
+						String status = jsonresponse.getBody().getObject().getJSONObject("response").get("status")
+								.toString();
 
 						/* to click return status code from API and Book button Click */
-						if (string12.equals("1")) {
-
+						final String compare_return_response_status = "2";
+						if (status.equals(compare_return_response_status)) {
 							List<WebElement> wait_Booking_click = wait_all_Elements
 									.until(ExpectedConditions.visibilityOfAllElements(p.getClickBooking()));
 							WebElement webElement2 = wait_Booking_click.get(actual_booking_index);
@@ -712,9 +711,9 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 							/* To Click Yes or No button for Booking Confirmation */
 							if (true) {
-								WebElement wait_Yes_click = wait_all_Elements
+								WebElement wait_yes_button_click = wait_all_Elements
 										.until(ExpectedConditions.elementToBeClickable(p.getYesClick()));
-								String text = wait_Yes_click.getText();
+								String text = wait_yes_button_click.getText();
 								System.out.println("Booking confirm button clicked : " + text);
 								jsClick(p.getNoClick());
 
