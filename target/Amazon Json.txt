@@ -1,0 +1,24 @@
+	/* Amazon Relay Json Object Creation */
+				JSONObject amazon_Json_array = new JSONObject();
+
+				/* Pick up object and pick array Objects creations */
+				LinkedHashMap<String, String> pickup_Object = new LinkedHashMap<>();
+				JSONArray pickup_array = new JSONArray();
+
+				String string2 = set_pickup_address.get(j);
+				pickup_Object.put("pic_address", string2);
+				pickup_array.add(pickup_Object);
+				amazon_Json_array.put("pic_address", pickup_array);
+
+
+/* Drops object and Drops array Objects creations */
+				LinkedHashMap<String, String> drops_Object = new LinkedHashMap<>();
+				JSONArray drops_array = new JSONArray();
+
+				drops_Object = new LinkedHashMap<>(1);
+				String drop1 = set_drop1_address.get(j);
+				// if (string1d != "N/A") {
+				// drops_Object = new LinkedHashMap<>(1);
+				// drops_Object .put("drop_address", string1d);
+				// drops_array .add(m);
+				// }
