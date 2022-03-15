@@ -1,2 +1,3 @@
-/target
-*.xlsx
+/target/*
+/src/test*.xlsx
+*.txt
