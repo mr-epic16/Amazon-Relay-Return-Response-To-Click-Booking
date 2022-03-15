@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -75,7 +74,10 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 	private static LinkedList<Integer> set_click_BTN = new LinkedList<Integer>();
 
 	/* store json format data */
-	private static LinkedList<String> json_AllData = new LinkedList<String>();
+	private static LinkedList<String> amazon_Json_Objects = new LinkedList<String>();
+
+	/* Excel Object */
+	private static LinkedHashMap<String, Object[]> amazonRelay_Excel = new LinkedHashMap<String, Object[]>();
 
 	public static void launching(String url) {
 		// launchBrowser("chrome");
@@ -116,7 +118,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 		// these are steps lines Excel data convention
 
-		LinkedHashMap<String, Object[]> amazonRelay_Excel = new LinkedHashMap<String, Object[]>();
 		amazonRelay_Excel.put("",
 				new Object[] { "TR_ID_One", "TR_ID_Two", "Time_Stamp", "Pickup_Address", "Drop01_Address",
 						"Drop02_Address", "Drop03_Address", "Drop04_Address", "Drop05_Address", "Drop06_Address",
@@ -150,7 +151,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		}
 
 		/* scraping pickup address from amazon relay */
-
 		List<WebElement> get_all_Head_Number = p.getAll_Head_Num();
 		List<WebElement> get_all_Head_Word = p.getAll_Head_word();
 		List<WebElement> get_all_Head_price = p.getAll_Head_price();
@@ -179,7 +179,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		System.out.println("All head Pickup ID Size : " + set_allPickup_ID.size());
 
 		// /* scraping for pickup Id data */
-
 		List<WebElement> get_pickup_ID_fourLetter = p.getPickup_ID_fourLetter();
 		List<WebElement> get_pickup_price = p.getPickup_price();
 
@@ -212,7 +211,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 			}
 		}
-		System.out.println("Want to Click : " + set_click_BTN);
+		System.out.println("Multiple TR Are There You Want to Click : " + set_click_BTN);
 
 		List<WebElement> clickFirst = p.getClickFirst();
 		for (int i = 0; i < set_click_BTN.size(); i++) {
@@ -436,153 +435,63 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 				set_pickup_address.add(substring);
 
 			} else if (address_Index.equalsIgnoreCase("2")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop1_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop1_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop1_address);
 
 			} else if (address_Index.equalsIgnoreCase("3")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop2_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop2_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop2_address);
 
 			} else if (address_Index.equalsIgnoreCase("4")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop3_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop3_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop3_address);
 
 			} else if (address_Index.equalsIgnoreCase("5")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop4_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop4_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop4_address);
 
 			} else if (address_Index.equalsIgnoreCase("6")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop5_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop5_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop5_address);
 
 			} else if (address_Index.equalsIgnoreCase("7")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop6_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop6_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop6_address);
 
 			} else if (address_Index.equalsIgnoreCase("8")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop7_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop7_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop7_address);
 
 			} else if (address_Index.equalsIgnoreCase("9")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop8_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop8_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop8_address);
 
 			} else if (address_Index.equalsIgnoreCase("10")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop9_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop9_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop9_address);
 
 			} else if (address_Index.equalsIgnoreCase("11")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop10_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop10_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop10_address);
 
 			} else if (address_Index.equalsIgnoreCase("12")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop11_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop11_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop11_address);
 
 			} else if (address_Index.equalsIgnoreCase("13")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop12_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop12_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop12_address);
 
 			} else if (address_Index.equalsIgnoreCase("14")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop13_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop13_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop13_address);
 
 			} else if (address_Index.equalsIgnoreCase("15")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop14_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop14_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop14_address);
 
 			} else if (address_Index.equalsIgnoreCase("16")) {
-				// String substring = string.substring(6);
-				// String last111 = set_pickup_address.getLast();
-				// int indexOf1 = set_pickup_address.lastIndexOf(last111);
-				// String string2 = set_drop15_address.get(indexOf1);
-				// if (!string2.equalsIgnoreCase(substring)) {
-				// set_drop15_address.set(indexOf1, substring);
-				// }
+
 				address_Arrangements(string, set_pickup_address, set_drop15_address);
 			}
 		}
@@ -599,134 +508,94 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		try {
 			for (int j = 0; j < set_arrival_pickup_date.size(); j++) {
 
-				JSONObject jo = new JSONObject();
+				/* Amazon Relay Json Object Creation */
+				JSONObject amazon_Json_array = new JSONObject();
 
-				Map<String, String> m1 = new LinkedHashMap<>();
-				JSONArray ja1 = new JSONArray();
+				/* Pick up object and pick array Objects creations */
+				LinkedHashMap<String, String> pickup_Object = new LinkedHashMap<>();
+				JSONArray pickup_array = new JSONArray();
+
 				String string2 = set_pickup_address.get(j);
-				m1.put("pic_address", string2);
-				ja1.add(m1);
-				jo.put("pic_address", ja1);
+				pickup_Object.put("pic_address", string2);
+				pickup_array.add(pickup_Object);
+				amazon_Json_array.put("pic_address", pickup_array);
 
-				Map<String, String> m = new LinkedHashMap<>();
+				/* Drops object and Drops array Objects creations */
+				LinkedHashMap<String, String> drops_Object = new LinkedHashMap<>();
+				JSONArray drops_array = new JSONArray();
 
-				JSONArray ja = new JSONArray();
+				String drop1 = set_drop1_address.get(j);
+				Json_Drops_Arrangements(drop1, drops_Object, drops_array);
 
-				m = new LinkedHashMap<>(1);
-				String string1d = set_drop1_address.get(j);
-				if (string1d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string1d);
-					ja.add(m);
-				}
-				String string2d = set_drop2_address.get(j);
-				if (string2d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string2d);
-					ja.add(m);
-				}
+				String drop2 = set_drop2_address.get(j);
+				Json_Drops_Arrangements(drop2, drops_Object, drops_array);
 
-				String string3d = set_drop3_address.get(j);
-				if (string3d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string3d);
-					ja.add(m);
-				}
+				String drop3 = set_drop3_address.get(j);
+				Json_Drops_Arrangements(drop3, drops_Object, drops_array);
 
-				String string4d = set_drop4_address.get(j);
-				if (string4d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string4d);
-					ja.add(m);
-				}
-				String string5d = set_drop5_address.get(j);
-				if (string5d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string5d);
-					ja.add(m);
-				}
-				String string6d = set_drop6_address.get(j);
-				if (string6d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string6d);
-					ja.add(m);
-				}
-				String string7d = set_drop7_address.get(j);
-				if (string7d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string7d);
-					ja.add(m);
-				}
-				String string8d = set_drop8_address.get(j);
-				if (string8d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string8d);
-					ja.add(m);
-				}
-				String string9d = set_drop9_address.get(j);
-				if (string9d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string9d);
-					ja.add(m);
-				}
-				String string10d = set_drop10_address.get(j);
-				if (string10d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string10d);
-					ja.add(m);
-				}
-				String string11d = set_drop11_address.get(j);
-				if (string11d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string11d);
-					ja.add(m);
-				}
-				String string12d = set_drop12_address.get(j);
-				if (string12d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string12d);
-					ja.add(m);
-				}
-				String string13d = set_drop13_address.get(j);
-				if (string13d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string13d);
-					ja.add(m);
-				}
-				String string14d = set_drop14_address.get(j);
-				if (string14d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string14d);
-					ja.add(m);
-				}
-				String string15d = set_drop15_address.get(j);
-				if (string15d != "N/A") {
-					m = new LinkedHashMap<>(1);
-					m.put("drop_address", string15d);
-					ja.add(m);
-				}
-				jo.put("drop_address", ja);
+				String drop4 = set_drop4_address.get(j);
+				Json_Drops_Arrangements(drop4, drops_Object, drops_array);
 
-				String string = set_arrival_pickup_date.get(j);
-				jo.put("pick_timestamp", string);
+				String drop5 = set_drop5_address.get(j);
+				Json_Drops_Arrangements(drop5, drops_Object, drops_array);
 
-				String string1 = set_pickup_truck.get(j);
-				jo.put("length", string1);
+				String drop6 = set_drop6_address.get(j);
+				Json_Drops_Arrangements(drop6, drops_Object, drops_array);
+				String drop7 = set_drop7_address.get(j);
 
-				String string7 = set_price_alldata.get(j);
-				jo.put("customer_price", string7);
+				Json_Drops_Arrangements(drop7, drops_Object, drops_array);
+				String drop8 = set_drop8_address.get(j);
 
-				JSONArray tr = new JSONArray();
-				String string8 = set_TR_ID.get(j);
-				tr.add(string8);
-				String string9 = set_TR_ID_Two.get(j);
-				if (string9 != "N/A") {
-					tr.add(string9);
+				Json_Drops_Arrangements(drop8, drops_Object, drops_array);
+				String drop9 = set_drop9_address.get(j);
+
+				Json_Drops_Arrangements(drop9, drops_Object, drops_array);
+				String drop10 = set_drop10_address.get(j);
+
+				Json_Drops_Arrangements(drop10, drops_Object, drops_array);
+				String drop11 = set_drop11_address.get(j);
+
+				Json_Drops_Arrangements(drop11, drops_Object, drops_array);
+				String drop12 = set_drop12_address.get(j);
+
+				Json_Drops_Arrangements(drop12, drops_Object, drops_array);
+				String drop13 = set_drop13_address.get(j);
+
+				Json_Drops_Arrangements(drop13, drops_Object, drops_array);
+				String drop14 = set_drop14_address.get(j);
+
+				Json_Drops_Arrangements(drop14, drops_Object, drops_array);
+				String drop15 = set_drop15_address.get(j);
+
+				Json_Drops_Arrangements(drop15, drops_Object, drops_array);
+				amazon_Json_array.put("drop_address", drops_array);
+
+				/* json pick_timestamp creating */
+				String pick_timestamp = set_arrival_pickup_date.get(j);
+				amazon_Json_array.put("pick_timestamp", pick_timestamp);
+
+				/* json truck_length creating */
+				String truck_length = set_pickup_truck.get(j);
+				amazon_Json_array.put("length", truck_length);
+
+				/* json customer_price creating */
+				String customer_price = set_price_alldata.get(j);
+				amazon_Json_array.put("customer_price", customer_price);
+
+				/* json tr_number creating one or Two */
+				JSONArray multiple_tr_Array = new JSONArray();
+				String tr_number_One = set_TR_ID.get(j);
+				multiple_tr_Array.add(tr_number_One);
+
+				String tr_number_Two = set_TR_ID_Two.get(j);
+				if (tr_number_Two != "N/A") {
+					multiple_tr_Array.add(tr_number_Two);
 				}
-				jo.put("tr_number", tr);
+				amazon_Json_array.put("tr_number", multiple_tr_Array);
 
-				String jsonString = jo.toString();
-				json_AllData.add(jsonString);
+				/* those all objects are one Booking Stores in amazon_Json_Objects */
+				String jsonString = amazon_Json_array.toString();
+				amazon_Json_Objects.add(jsonString);
 
 				System.out.println(jsonString);
 
@@ -736,7 +605,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			System.out.println("Exception messages : " + e2.getMessage());
 		}
 
-		System.out.println("Json all Data Size : " + json_AllData.size());
+		System.out.println("Json all Data Size : " + amazon_Json_Objects.size());
 
 		for (int i = 0; i < set_pickup_address.size(); i++) {
 			String TR_ID_One = set_TR_ID.get(i);
@@ -786,8 +655,8 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 		try {
 			/* These are Steps For ApI Conventions */
-			for (int i = 0; i < json_AllData.size(); i++) {
-				String datas = json_AllData.get(i);
+			for (int i = 0; i < amazon_Json_Objects.size(); i++) {
+				String datas = amazon_Json_Objects.get(i);
 
 				HttpResponse<JsonNode> jsonresponse = Unirest
 						.post("https://admin-staging.wowtruck.in/webservice/amazonrelaytobookingconversion")
@@ -860,7 +729,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		}
 
 		/* TO clear all Linked list */
-		json_AllData.clear();
+		amazon_Json_Objects.clear();
 		amazonRelay_Excel.clear();
 		get_all_pickup_data.clear();
 		set_pickup_address.clear();

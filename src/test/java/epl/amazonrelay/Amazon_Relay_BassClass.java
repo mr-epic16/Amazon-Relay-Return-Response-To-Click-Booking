@@ -2,10 +2,12 @@ package epl.amazonrelay;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.json.simple.JSONArray;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -128,4 +130,15 @@ public class Amazon_Relay_BassClass {
 		}
 
 	}
+
+	@SuppressWarnings("unchecked")
+	public static void Json_Drops_Arrangements(String drops, LinkedHashMap<String, String> drops_Object,
+			JSONArray drops_array) {
+		if (drops != "N/A") {
+			drops_Object = new LinkedHashMap<>(1);
+			drops_Object.put("drop_address", drops);
+			drops_array.add(drops_Object);
+		}
+	}
+
 }
