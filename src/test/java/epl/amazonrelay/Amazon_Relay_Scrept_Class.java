@@ -80,7 +80,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 		sleepTime();
 		Amazon_Relay_POJO_Class p = new Amazon_Relay_POJO_Class();
-		WebDriverWait wait_all_Elements = new WebDriverWait(driver, 10);
+		WebDriverWait wait_all_Elements = new WebDriverWait(driver, 20);
 		clickTheButton(p.getUsername());
 		fillTheText(p.getUsername(), userName);
 
@@ -653,7 +653,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 								.toString();
 
 						/* to click return status code from API and Book button Click */
-						final String compare_return_response_status = "0";
+						final String compare_return_response_status = "1";
 						if (status.equals(compare_return_response_status)) {
 							List<WebElement> wait_Booking_click = wait_all_Elements
 									.until(ExpectedConditions.visibilityOfAllElements(p.getClickBooking()));
