@@ -1,20 +1,13 @@
 
 package epl.amazonrelay;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.WebElement;
@@ -76,17 +69,13 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 	/* store json format data */
 	private static LinkedList<String> amazon_Json_Objects = new LinkedList<String>();
 
-	/* Excel Object */
-	private static LinkedHashMap<String, Object[]> amazonRelay_Excel = new LinkedHashMap<String, Object[]>();
-
 	public static void launching(String url) {
 		// launchBrowser("chrome");
 		chromeHeadless();
 		launchUrl(url);
-
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation", "resource", "unused", })
+	@SuppressWarnings({ "unchecked", "deprecation", "unused", })
 	public static void login(String userName, String Password) throws Exception {
 
 		sleepTime();
@@ -107,23 +96,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		navigateRefresh();
 
 		jsClick(p.getClickMoreBtn());
-
-		XSSFWorkbook workbook = new XSSFWorkbook();
-
-		// spreadsheet object
-		XSSFSheet spreadsheet = workbook.createSheet("Amazon_Booking_Order");
-		// This data needs to be written (Object[])
-		// creating a row object
-		XSSFRow row;
-
-		// these are steps lines Excel data convention
-		amazonRelay_Excel.put("",
-				new Object[] { "TR_ID_One", "TR_ID_Two", "Time_Stamp", "Pickup_Address", "Drop01_Address",
-						"Drop02_Address", "Drop03_Address", "Drop04_Address", "Drop05_Address", "Drop06_Address",
-						"Drop07_Address", "Drop08_Address", "Drop09_Address", "Drop10_Address", "Drop11_Address",
-						"Drop12_Address", "Drop13_Address", "Drop14_Address", "Drop15_Address", "Truck_Length",
-						"Price" });
-		int rowid = 0;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM");
 		Calendar c = Calendar.getInstance();
@@ -167,7 +139,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			String substring2 = text2.substring(0, 4);
 
 			String concat2 = pickuptext.concat(substring2);
-
 			String concat3 = concat2.concat(substring);
 			if (head_Click == i) {
 				break;
@@ -185,11 +156,11 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 			WebElement webElement = get_pickup_ID_fourLetter.get(i1);
 			String pickuptext = webElement.getText();
-
+			String substring2 = pickuptext.substring(0, 5);
 			WebElement webElement2 = get_pickup_price.get(i1);
 			String text = webElement2.getText();
 			String substring = text.substring(1);
-			String concat = pickuptext.concat(substring);
+			String concat = substring2.concat(substring);
 			set_pickupId.add(concat);
 		}
 
@@ -254,58 +225,86 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		System.out.println("Arrival pickup date Size : " + set_arrival_pickup_date.size());
 
 		List<WebElement> clickSecond = p.getClickSecond();
-		for (int i = 0; i < clickSecond.size(); i++) {
-			WebElement webElement = clickSecond.get(i);
-			jsClick(webElement);
-		}
+		int tr_row_two = clickSecond.size();
+		if (tr_row_two != 0) {
 
-		List<WebElement> clickthird = p.getClickthird();
-		for (int i = 0; i < clickthird.size(); i++) {
-			WebElement webElement = clickthird.get(i);
-			jsClick(webElement);
-		}
+			for (int i = 0; i < clickSecond.size(); i++) {
+				WebElement webElement = clickSecond.get(i);
+				jsClick(webElement);
+			}
 
-		List<WebElement> clickfourth = p.getClickfourth();
-		for (int i = 0; i < clickfourth.size(); i++) {
-			WebElement webElement = clickfourth.get(i);
-			jsClick(webElement);
+			List<WebElement> clickthird = p.getClickthird();
+			int tr_row_three = clickthird.size();
+			if (tr_row_three != 0) {
+				for (int i = 0; i < clickthird.size(); i++) {
+					WebElement webElement = clickthird.get(i);
+					jsClick(webElement);
+				}
 
-		}
-		List<WebElement> clickfive = p.getClick_five();
-		for (int i = 0; i < clickfive.size(); i++) {
-			WebElement webElement = clickfive.get(i);
-			jsClick(webElement);
+				List<WebElement> clickfourth = p.getClickfourth();
+				int tr_row_four = clickfourth.size();
+				if (tr_row_four != 0) {
+					for (int i = 0; i < clickfourth.size(); i++) {
+						WebElement webElement = clickfourth.get(i);
+						jsClick(webElement);
 
-		}
-		List<WebElement> clicksix = p.getClick_six();
-		for (int i = 0; i < clicksix.size(); i++) {
-			WebElement webElement = clicksix.get(i);
-			jsClick(webElement);
+					}
+					List<WebElement> clickfive = p.getClick_five();
+					int tr_row_five = clickfive.size();
+					if (tr_row_five != 0) {
+						for (int i = 0; i < clickfive.size(); i++) {
+							WebElement webElement = clickfive.get(i);
+							jsClick(webElement);
 
-		}
-		List<WebElement> clickseven = p.getClick_seven();
-		for (int i = 0; i < clickseven.size(); i++) {
-			WebElement webElement = clickseven.get(i);
-			jsClick(webElement);
+						}
+						List<WebElement> clicksix = p.getClick_six();
+						int tr_row_six = clicksix.size();
+						if (tr_row_six != 0) {
+							for (int i = 0; i < clicksix.size(); i++) {
+								WebElement webElement = clicksix.get(i);
+								jsClick(webElement);
 
-		}
-		List<WebElement> clickeight = p.getClick_eight();
-		for (int i = 0; i < clickeight.size(); i++) {
-			WebElement webElement = clickeight.get(i);
-			jsClick(webElement);
+							}
+							List<WebElement> clickseven = p.getClick_seven();
+							int tr_row_seven = clickseven.size();
+							if (tr_row_seven != 0) {
+								for (int i = 0; i < clickseven.size(); i++) {
+									WebElement webElement = clickseven.get(i);
+									jsClick(webElement);
 
-		}
-		List<WebElement> clicknine = p.getClick_nine();
-		for (int i = 0; i < clicknine.size(); i++) {
-			WebElement webElement = clicknine.get(i);
-			jsClick(webElement);
+								}
+								List<WebElement> clickeight = p.getClick_eight();
+								int tr_row_eight = clickeight.size();
+								if (tr_row_eight != 0) {
+									for (int i = 0; i < clickeight.size(); i++) {
+										WebElement webElement = clickeight.get(i);
+										jsClick(webElement);
 
-		}
-		List<WebElement> clickten = p.getClick_ten();
-		for (int i = 0; i < clickten.size(); i++) {
-			WebElement webElement = clickten.get(i);
-			jsClick(webElement);
+									}
+									List<WebElement> clicknine = p.getClick_nine();
+									int tr_row_nine = clicknine.size();
+									if (tr_row_nine != 0) {
+										for (int i = 0; i < clicknine.size(); i++) {
+											WebElement webElement = clicknine.get(i);
+											jsClick(webElement);
 
+										}
+										List<WebElement> clickten = p.getClick_ten();
+										int tr_row_ten = clickten.size();
+										if (tr_row_ten != 0) {
+											for (int i = 0; i < clickten.size(); i++) {
+												WebElement webElement = clickten.get(i);
+												jsClick(webElement);
+
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 		/* scraping all price amount from amazon relay */
@@ -406,7 +405,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		for (int i = 0; i < set_drop1_address.size(); i++) {
 			set_drop1_address.set(i, "N/A");
 		}
-		System.out.println("set_drop1_address : " + set_drop1_address.size());
 		set_drop2_address.addAll(set_drop1_address);
 		set_drop3_address.addAll(set_drop1_address);
 		set_drop4_address.addAll(set_drop1_address);
@@ -606,52 +604,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 		System.out.println("Json all Data Size : " + amazon_Json_Objects.size());
 
-		for (int i = 0; i < set_pickup_address.size(); i++) {
-			String TR_ID_One = set_TR_ID.get(i);
-			String TR_ID_Two = set_TR_ID_Two.get(i);
-			String Time_Stamp = set_arrival_pickup_date.get(i);
-			String Pickup_Address = set_pickup_address.get(i);
-			String Drop01_Address = set_drop1_address.get(i);
-			String Drop02_Address = set_drop2_address.get(i);
-			String Drop03_Address = set_drop3_address.get(i);
-			String Drop04_Address = set_drop4_address.get(i);
-			String Drop05_Address = set_drop5_address.get(i);
-			String Drop06_Address = set_drop6_address.get(i);
-			String Drop07_Address = set_drop7_address.get(i);
-			String Drop08_Address = set_drop8_address.get(i);
-			String Drop09_Address = set_drop9_address.get(i);
-			String Drop10_Address = set_drop10_address.get(i);
-			String Drop11_Address = set_drop11_address.get(i);
-			String Drop12_Address = set_drop12_address.get(i);
-			String Drop13_Address = set_drop13_address.get(i);
-			String Drop14_Address = set_drop14_address.get(i);
-			String Drop15_Address = set_drop15_address.get(i);
-			String Truck_Length = set_pickup_truck.get(i);
-			String Price = set_price_alldata.get(i);
-			String valueOf = String.valueOf(i);
-			amazonRelay_Excel.put(valueOf,
-					new Object[] { TR_ID_One, TR_ID_Two, Time_Stamp, Pickup_Address, Drop01_Address, Drop02_Address,
-							Drop03_Address, Drop04_Address, Drop05_Address, Drop06_Address, Drop07_Address,
-							Drop08_Address, Drop09_Address, Drop10_Address, Drop11_Address, Drop12_Address,
-							Drop13_Address, Drop14_Address, Drop15_Address, Truck_Length, Price });
-		}
-
-		Set<String> keyid = amazonRelay_Excel.keySet();
-
-		// writing the data into the sheets...
-
-		for (String key : keyid) {
-
-			row = spreadsheet.createRow(rowid++);
-			Object[] objectArr = amazonRelay_Excel.get(key);
-			int cellid = 0;
-
-			for (Object obj : objectArr) {
-				XSSFCell cell = row.createCell(cellid++);
-				cell.setCellValue((String) obj);
-			}
-		}
-
 		try {
 			/* These are Steps For ApI Conventions */
 			for (int i = 0; i < amazon_Json_Objects.size(); i++) {
@@ -701,7 +653,7 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 								.toString();
 
 						/* to click return status code from API and Book button Click */
-						final String compare_return_response_status = "2";
+						final String compare_return_response_status = "0";
 						if (status.equals(compare_return_response_status)) {
 							List<WebElement> wait_Booking_click = wait_all_Elements
 									.until(ExpectedConditions.visibilityOfAllElements(p.getClickBooking()));
@@ -729,7 +681,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 		/* TO clear all Linked list */
 		amazon_Json_Objects.clear();
-		amazonRelay_Excel.clear();
 		get_all_pickup_data.clear();
 		set_pickup_address.clear();
 		set_drop1_address.clear();
@@ -757,11 +708,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		get_TR_ID_Two.clear();
 		set_TR_ID_Two.clear();
 
-		FileOutputStream out = new FileOutputStream(
-				new File(".//src/test/AmazonRelayBooking" + System.currentTimeMillis() + ".xlsx"));
-
-		workbook.write(out);
-		out.close();
 	}
 
 }
