@@ -70,8 +70,8 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 	private static LinkedList<String> amazon_Json_Objects = new LinkedList<String>();
 
 	public static void launching(String url) {
-		launchBrowser("chrome");
-		// chromeHeadless();
+		// launchBrowser("chrome");
+		chromeHeadless();
 		launchUrl(url);
 	}
 
