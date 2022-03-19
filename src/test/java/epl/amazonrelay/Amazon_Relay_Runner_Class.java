@@ -14,6 +14,7 @@ public class Amazon_Relay_Runner_Class extends Amazon_Relay_Scrept_Class {
 	@AfterClass
 	private void quit_Browser() {
 		closeBrowser();
+
 	}
 
 }

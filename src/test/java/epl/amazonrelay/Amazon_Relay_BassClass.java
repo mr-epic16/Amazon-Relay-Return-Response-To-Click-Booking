@@ -120,7 +120,7 @@ public class Amazon_Relay_BassClass {
 
 	}
 
-	public static void address_Arrangements(String values, LinkedList<String> pickup, LinkedList<String> drop) {
+	public static void drops_Address_Arrangements(String values, LinkedList<String> pickup, LinkedList<String> drop) {
 		String substring = values.substring(6);
 		String last111 = pickup.getLast();
 		int indexOf1 = pickup.lastIndexOf(last111);
@@ -129,6 +129,11 @@ public class Amazon_Relay_BassClass {
 			drop.set(indexOf1, substring);
 		}
 
+	}
+
+	public static void pickup_Address_Arrangements(String values, LinkedList<String> pickup) {
+		String substring = values.substring(6);
+		pickup.add(substring);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -141,4 +146,9 @@ public class Amazon_Relay_BassClass {
 		}
 	}
 
+	public static void scrollDown(WebElement e) {
+		js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView(true)", e);
+
+	}
 }
