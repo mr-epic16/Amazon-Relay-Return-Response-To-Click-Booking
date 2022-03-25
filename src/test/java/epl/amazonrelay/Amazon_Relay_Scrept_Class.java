@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -53,8 +54,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 	/* TR Adding */
 	private static LinkedList<String> set_TR_ID = new LinkedList<String>();
-	private static LinkedList<String> get_TR_ID_Two = new LinkedList<String>();
-	private static LinkedList<String> set_TR_ID_Two = new LinkedList<String>();
 
 	/* Store all pickup & drop id */
 	private static LinkedList<String> set_allPickup_ID = new LinkedList<String>();
@@ -63,50 +62,71 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 	private static LinkedList<String> set_pickupId = new LinkedList<String>();
 
-	/* Store Multiple TR index */
-	private static LinkedList<Integer> set_click_BTN = new LinkedList<Integer>();
-
 	/* store json format data */
 	private static LinkedList<String> amazon_Json_Objects = new LinkedList<String>();
 
-	public static void launching(String url) {
-		// launchBrowser("chrome");
-		chromeHeadless();
-		launchUrl(url);
+	/* Amazon relay Credentials Class */
+	private static Amazon_CredentialsClass property = new Amazon_CredentialsClass();;
+
+	public static void launching() {
+		Properties launching_Credentials = property.credentials();
+		launchBrowser(launching_Credentials.getProperty("Wow.chromeType"));
+		launchUrl(launching_Credentials.getProperty("Wow.Amazon_Scearch_Url"));
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation", "unused", })
-	public static void login(String userName, String Password) throws Exception {
-
+	@SuppressWarnings({ "unchecked", "unused", })
+	public static void login() {
+		Properties login_Credentials = property.credentials();
 		sleepTime();
 		Amazon_Relay_POJO_Class p = new Amazon_Relay_POJO_Class();
 		WebDriverWait wait_all_Elements = new WebDriverWait(driver, 20);
 		clickTheButton(p.getUsername());
-		fillTheText(p.getUsername(), userName);
+		fillTheText(p.getUsername(), login_Credentials.getProperty("Wow.Amazon_Username"));
 
 		clickTheButton(p.getPassword());
-		fillTheText(p.getPassword(), Password);
+		fillTheText(p.getPassword(), login_Credentials.getProperty("Wow.Amazon_UserPassword"));
 
 		clickTheButton(p.getLogin());
 
-		WebElement loadboard_Wait = wait_all_Elements.until(ExpectedConditions.elementToBeClickable(p.getLoadboard()));
-		jsClick(loadboard_Wait);
+		// WebElement loadboard_Wait =
+		// wait_all_Elements.until(ExpectedConditions.elementToBeClickable(p.getLoadboard()));
+		// jsClick(loadboard_Wait);
+		//
+		// jsClick(p.getSearch());
 
-		jsClick(p.getSearch());
 		navigateRefresh();
-
-		jsClick(p.getClickMoreBtn());
 
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM");
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
-		c.add(Calendar.DATE, 2);
+		String property2 = login_Credentials.getProperty("Wow.Date_Filter_Decision");
+
+		Integer date_Decision = Integer.valueOf(property2);
+		c.add(Calendar.DATE, date_Decision);
 		final String Date_Compare_To_Click = sdf.format(c.getTime());
 
-		int head_Click = 0;
 		List<WebElement> firstclick2 = p.getFirstclick();
 		List<WebElement> date_CompareToClick = p.getDate_CompareToClick();
+		/* scraping all pick arrival date from amazon relay */
+		List<WebElement> PickUp_TimeStamp = p.getAll_PickUp_TimeStamp();
+		/* scraping all price amount from amazon relay */
+		List<WebElement> get_price = p.getPrice();
 
+		/* Scraping all truck from amazon relay */
+		List<WebElement> get_allTruck = p.getAll_Truck();
+
+		/* Scraping TR Id From amazon relay */
+		List<WebElement> get_all_TR = p.getAll_TR_ID();
+
+		/* scraping pickup address from amazon relay */
+		List<WebElement> get_all_Head_Number = p.getAll_Head_Num();
+		List<WebElement> get_all_Head_Word = p.getAll_Head_word();
+
+		/* scraping for pickup Id data */
+		List<WebElement> get_pickup_ID_fourLetter = p.getPickup_ID_fourLetter();
+		List<WebElement> get_pickup_price = p.getPickup_price();
+
+		List<WebElement> clickFirst = p.getClickFirst();
 		for (int i = 0; i < firstclick2.size(); i++) {
 
 			WebElement webElement = firstclick2.get(i);
@@ -114,115 +134,52 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			String text = webElement2.getText();
 			String substring = text.substring(0, 10);
 			if (Date_Compare_To_Click.equals(substring)) {
-				head_Click = i;
 				break;
-			}
-			WebElement wait_First_Click = wait_all_Elements.until(ExpectedConditions.elementToBeClickable(webElement));
-			jsClick(wait_First_Click);
-		}
+			} else {
+				WebElement wait_First_Click = wait_all_Elements
+						.until(ExpectedConditions.elementToBeClickable(webElement));
+				jsClick(wait_First_Click);
 
-		/* scraping pickup address from amazon relay */
-		List<WebElement> get_all_Head_Number = p.getAll_Head_Num();
-		List<WebElement> get_all_Head_Word = p.getAll_Head_word();
-		List<WebElement> get_all_Head_price = p.getAll_Head_price();
+				WebElement get_PickUp_TimeStamp = PickUp_TimeStamp.get(i);
+				get_Pickup_TimeStamp(get_PickUp_TimeStamp, set_arrival_pickup_date);
 
-		for (int i = 0; i < get_all_Head_Number.size(); i++) {
-			WebElement webElement = get_all_Head_Number.get(i);
-			String pickuptext = webElement.getText();
+				WebElement get_Price = get_price.get(i);
+				get_Price(get_Price, set_price_alldata);
 
-			WebElement webElement2 = get_all_Head_price.get(i);
-			String text = webElement2.getText();
-			String substring = text.substring(1);
+				WebElement getlength = get_allTruck.get(i);
+				get_All_Truck_Length(getlength, set_pickup_truck);
 
-			WebElement webElement3 = get_all_Head_Word.get(i);
-			String text2 = webElement3.getText();
-			String substring2 = text2.substring(0, 4);
+				WebElement get_TR_Num = get_all_TR.get(i);
+				get_All_TR_ID(get_TR_Num, set_TR_ID);
 
-			String concat2 = pickuptext.concat(substring2);
-			String concat3 = concat2.concat(substring);
-			if (head_Click == i) {
-				break;
-			}
-			set_allPickup_ID.add(concat3);
+				WebElement all_Head_Number = get_all_Head_Number.get(i);
+				WebElement all_Head_Word = get_all_Head_Word.get(i);
+				get_Top_Row_Header_Pickup_ID(all_Head_Number, get_Price, all_Head_Word, set_allPickup_ID);
 
-		}
-		System.out.println("All head Pickup ID Size : " + set_allPickup_ID.size());
+				WebElement pickup_ID_fourLetter = get_pickup_ID_fourLetter.get(i);
+				WebElement pickup_price = get_pickup_price.get(i);
+				get_Tr_Row_Header_Pickup_ID(pickup_ID_fourLetter, pickup_price, set_pickupId);
 
-		/* scraping for pickup Id data */
-		List<WebElement> get_pickup_ID_fourLetter = p.getPickup_ID_fourLetter();
-		List<WebElement> get_pickup_price = p.getPickup_price();
-
-		for (int i1 = 0; i1 < get_pickup_ID_fourLetter.size(); i1++) {
-
-			WebElement webElement = get_pickup_ID_fourLetter.get(i1);
-			String pickuptext = webElement.getText();
-			String substring2 = pickuptext.substring(0, 5);
-			WebElement webElement2 = get_pickup_price.get(i1);
-			String text = webElement2.getText();
-			String substring = text.substring(1);
-			String concat = substring2.concat(substring);
-			set_pickupId.add(concat);
-		}
-
-		System.out.println("Pickup Id Size : " + set_pickupId.size());
-		int a = 0;
-		for (int i = 0; i < set_allPickup_ID.size(); i++) {
-			String string = set_allPickup_ID.get(i);
-			for (int j = a; j < set_pickupId.size(); j++) {
-				String string2 = set_pickupId.get(j);
-				if (!string.equalsIgnoreCase(string2)) {
-					set_click_BTN.add(i);
-					a++;
-					break;
-				} else {
-					a++;
-					break;
+				String Head_Row_Pickup_ID = set_allPickup_ID.getLast();
+				String Tr_Row_pickupId = set_pickupId.getLast();
+				if (!Head_Row_Pickup_ID.equalsIgnoreCase(Tr_Row_pickupId)) {
+					WebElement to_Click_First_Tr_Row = clickFirst.get(i);
+					jsClick(to_Click_First_Tr_Row);
 				}
-
 			}
-		}
-		System.out.println("Multiple TR Are There You Want to Click : " + set_click_BTN);
 
-		List<WebElement> clickFirst = p.getClickFirst();
-		for (int i = 0; i < set_click_BTN.size(); i++) {
-			Integer integer = set_click_BTN.get(i);
-			WebElement webElement = clickFirst.get(integer);
-			jsClick(webElement);
-
-		}
-
-		/* scraping all pick arrival date from amazon relay */
-		List<WebElement> get_arrival_pickup_date = p.getArrival_pickup_date();
-
-		for (int i111 = 0; i111 < get_arrival_pickup_date.size(); i111++) {
-			WebElement webElement11 = get_arrival_pickup_date.get(i111);
-			String arrivaldate = webElement11.getText();
-
-			CharSequence subSequence2 = arrivaldate.subSequence(3, 5);
-			String string = subSequence2.toString();
-
-			String s1 = "/";
-			String concat = string.concat(s1);
-
-			CharSequence subSequence = arrivaldate.subSequence(0, 2);
-			String string2 = subSequence.toString();
-			String concat2 = concat.concat(string2);
-
-			CharSequence subSequence3 = arrivaldate.subSequence(5, 11);
-
-			String string3 = subSequence3.toString();
-			String concat3 = concat2.concat(string3);
-
-			Date date = new Date();
-			int year = date.getYear();
-			int currentYear = year + 1900;
-			String valueOf = String.valueOf(currentYear);
-			String concat4 = valueOf.concat(s1);
-			String concat5 = concat4.concat(concat3);
-
-			set_arrival_pickup_date.add(concat5);
 		}
 		System.out.println("Arrival pickup date Size : " + set_arrival_pickup_date.size());
+
+		System.out.println("Price all data Size : " + set_price_alldata.size());
+
+		System.out.println("Pickup Truck Size : " + set_pickup_truck.size());
+
+		System.out.println("All TR ID Size : " + set_TR_ID.size());
+
+		System.out.println("All head Pickup ID Size : " + set_allPickup_ID.size());
+
+		System.out.println("Pickup Id Size : " + set_pickupId.size());
 
 		List<WebElement> clickSecond = p.getClickSecond();
 		int tr_row_two = clickSecond.size();
@@ -315,94 +272,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			}
 		}
 
-		/* scraping all price amount from amazon relay */
-		List<WebElement> get_price = p.getPrice();
-
-		for (int i = 0; i < get_price.size(); i++) {
-
-			WebElement webElement = get_price.get(i);
-
-			String text = webElement.getText();
-			String replace = text.replaceAll(",", "");
-			String substring = replace.substring(1);
-			if (head_Click == i) {
-				break;
-			}
-			set_price_alldata.add(substring);
-		}
-
-		System.out.println("Price all data Size : " + set_price_alldata.size());
-
-		/* Scraping all truck from amazon relay */
-
-		List<WebElement> get_allTruck = p.getAll_Truck();
-		for (int i11 = 0; i11 < get_allTruck.size(); i11++) {
-			WebElement tdata = get_allTruck.get(i11);
-			String length = tdata.getText();
-
-			if (head_Click == i11) {
-				break;
-			}
-			switch (length) {
-			case "THIRTY_FOUR_FOOT_TRUCK":
-				String Truck_34 = "34' Truck";
-				set_pickup_truck.add(Truck_34);
-				break;
-			case "THIRTY_TWO_FOOT_TRUCK":
-				String Truck_32 = "32' Truck";
-				set_pickup_truck.add(Truck_32);
-				break;
-			case "TWENTY_FOOT_TRUCK_CNG":
-				String Truck_20 = "20' Truck";
-				set_pickup_truck.add(Truck_20);
-				break;
-			case "FOURTEEN_FOOT_TRUCK_CNG":
-				String Truck_14 = "14' Truck";
-				set_pickup_truck.add(Truck_14);
-				break;
-			case "SEVEN_FOOT_TRUCK_ELECTRIC_AMT":
-				String Truck_7 = "7' Truck";
-				set_pickup_truck.add(Truck_7);
-				break;
-			case "TEN_FOOT_TRUCK_AMT":
-				String Truck_10 = "10' Truck";
-				set_pickup_truck.add(Truck_10);
-				break;
-			default:
-				set_pickup_truck.add(length);
-				break;
-
-			}
-		}
-		System.out.println("Pickup Truck Size : " + set_pickup_truck.size());
-
-		/* Scraping TR Id From amazon relay */
-		try
-
-		{
-			List<WebElement> get_All_TR_ID = p.getAll_TR_ID();
-
-			for (int i1 = 0; i1 < get_All_TR_ID.size(); i1++) {
-				WebElement webElement1 = get_All_TR_ID.get(i1);
-				String tRId = webElement1.getText();
-				String substring = tRId.substring(3);
-				set_TR_ID.add(substring);
-			}
-		} catch (Exception e3) {
-
-			System.out.println("getAllTR_ID : " + e3.getMessage());
-		}
-
-		System.out.println("All TR ID Size : " + set_TR_ID.size());
-
-		List<WebElement> tr_Two2 = p.getTR_Two();
-		for (int i = 0; i < tr_Two2.size(); i++) {
-			WebElement webElement = tr_Two2.get(i);
-			String text = webElement.getText();
-			String substring = text.substring(3);
-			get_TR_ID_Two.add(substring);
-		}
-
 		/* scraping all addresses like pickup, all drop from amazon */
 		List<WebElement> get_pickup_allData = p.getPickup_allData();
 		List<WebElement> getallData = p.getallData();
@@ -433,7 +302,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		set_drop13_address.addAll(set_drop1_address);
 		set_drop14_address.addAll(set_drop1_address);
 		set_drop15_address.addAll(set_drop1_address);
-		set_TR_ID_Two.addAll(set_drop1_address);
 
 		/* Arrangement all Booking addresses */
 		for (int i = 0; i < get_all_pickup_data.size(); i++) {
@@ -495,15 +363,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 			}
 
 		}
-
-		/* insert the TR Number in List */
-		for (int i = 0; i < set_click_BTN.size(); i++) {
-			Integer integer = set_click_BTN.get(i);
-			String string = get_TR_ID_Two.get(i);
-			int size2 = set_arrival_pickup_date.size();
-			set_TR_ID_Two.set(integer, string);
-		}
-		System.out.println("Second Tr : " + set_TR_ID_Two);
 
 		try {
 			for (int j = 0; j < set_arrival_pickup_date.size(); j++) {
@@ -587,10 +446,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 				String tr_number_One = set_TR_ID.get(j);
 				multiple_tr_Array.add(tr_number_One);
 
-				String tr_number_Two = set_TR_ID_Two.get(j);
-				if (tr_number_Two != "N/A") {
-					multiple_tr_Array.add(tr_number_Two);
-				}
 				amazon_Json_array.put("tr_number", multiple_tr_Array);
 
 				/* those all objects are one Booking Stores in amazon_Json_Objects */
@@ -598,88 +453,83 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 				amazon_Json_Objects.add(jsonString);
 
 				System.out.println(jsonString);
-
 			}
 		} catch (Exception e2) {
 
 			System.out.println("Exception messages : " + e2.getMessage());
 		}
-
 		System.out.println("Json all Data Size : " + amazon_Json_Objects.size());
 
+		String Response_Num = login_Credentials.getProperty("Wow.Amazon_API_return_response_status");
 		try {
 			/* These are Steps For ApI Conventions */
 			for (int i = 0; i < amazon_Json_Objects.size(); i++) {
 				String datas = amazon_Json_Objects.get(i);
 
-				HttpResponse<JsonNode> jsonresponse = Unirest
-						.post("https://admin-staging.wowtruck.in/webservice/amazonrelaytobookingconversion")
+				HttpResponse<JsonNode> jsonresponse = Unirest.post(login_Credentials.getProperty("Wow.Amazon_API_Url"))
 						.header("Content-Type", "application/json").body(datas).asJson();
-				System.out.println("status code :" + jsonresponse.getStatus());
-				System.out.println("response body :" + jsonresponse.getBody());
 
 				/* To Get into return API response body isn't Body Empty */
 				String json_body = jsonresponse.getBody().toString();
+				System.out.println("response body : " + json_body);
+
 				if (!json_body.equals("{}")) {
 
-					org.json.JSONObject j = new org.json.JSONObject(datas);
-					String string = j.get("tr_number").toString();
-					org.json.JSONArray j1 = new org.json.JSONArray(string);
-					String string2 = j1.get(0).toString();
-					System.out.println("TR No : " + string2);
+					String status = jsonresponse.getBody().getObject().getJSONObject("response").get("status")
+							.toString();
 
-					/* get booking actual index from amazon relay to click */
-					int actual_booking_index = 0;
-					String TR_State = null;
-					final String trState = "TR IS NOT THERE";
-					List<WebElement> get_CureentTR_Appears = p.getAll_TR_ID();
-					for (int i1 = 0; i1 < get_CureentTR_Appears.size(); i1++) {
-						WebElement webElement1 = get_CureentTR_Appears.get(i1);
-						String tRId = webElement1.getText();
-						String substring = tRId.substring(3);
+					/* to click return status code from API and Book button Click */
 
-						if (substring.equalsIgnoreCase(string2)) {
-							actual_booking_index = i1;
-							TR_State = "TR IS THERE";
-							break;
-						} else {
-							TR_State = "TR IS NOT THERE";
+					if (status.equals(Response_Num)) {
+
+						// org.json.JSONObject j = new org.json.JSONObject(datas);
+						// String string = j.get("tr_number").toString();
+						// org.json.JSONArray j1 = new org.json.JSONArray(string);
+						// String string2 = j1.get(0).toString();
+
+						String string3 = set_TR_ID.get(i);
+						System.out.println("TR No : " + string3);
+
+						/* get booking actual index from amazon relay to click */
+						int actual_booking_index = 0;
+						List<WebElement> get_CureentTR_Appears = p.getAll_TR_ID();
+						for (int i1 = i; i1 < get_CureentTR_Appears.size(); i1++) {
+							WebElement webElement1 = get_CureentTR_Appears.get(i1);
+							String tRId = webElement1.getText();
+							String substring = tRId.substring(3);
+
+							if (substring.equalsIgnoreCase(string3)) {
+								actual_booking_index = i1;
+								break;
+							}
 						}
-					}
-
-					/* To check TR present or not */
-					if (!TR_State.equals(trState)) {
 
 						System.out.println("Booking_TR_Index : " + actual_booking_index);
 
-						String status = jsonresponse.getBody().getObject().getJSONObject("response").get("status")
-								.toString();
+						/* To check TR present or not */
+						List<WebElement> wait_Booking_click = wait_all_Elements
+								.until(ExpectedConditions.visibilityOfAllElements(p.getClickBooking()));
+						WebElement webElement2 = wait_Booking_click.get(actual_booking_index);
+						scrollDown(webElement2);
+						jsClick(webElement2);
+						System.out.println("Booking button clicked : " + actual_booking_index);
 
-						/* to click return status code from API and Book button Click */
-						final String compare_return_response_status = "1";
-						if (status.equals(compare_return_response_status)) {
-							List<WebElement> wait_Booking_click = wait_all_Elements
-									.until(ExpectedConditions.visibilityOfAllElements(p.getClickBooking()));
-							WebElement webElement2 = wait_Booking_click.get(actual_booking_index);
-							// scrollDown(webElement2);
-							jsClick(webElement2);
+						/* To Click Yes or No button for Booking Confirmation */
+						WebElement wait_no_button_click = wait_all_Elements
+								.until(ExpectedConditions.elementToBeClickable(p.getNoClick()));
+						String text = wait_no_button_click.getText();
+						System.out.println("Booking confirm button clicked : " + text);
+						jsClick(wait_no_button_click);
 
-							System.out.println("Booking button clicked : " + i);
+						captureScreenshot(string3);
 
-							/* To Click Yes or No button for Booking Confirmation */
-
-							WebElement wait_no_button_click = wait_all_Elements
-									.until(ExpectedConditions.elementToBeClickable(p.getNoClick()));
-							String text = wait_no_button_click.getText();
-							System.out.println("Booking confirm button clicked : " + text);
-							jsClick(wait_no_button_click);
-							// screenShot();
-
-						}
 					}
 				}
 			}
-		} catch (UnirestException e11) {
+
+		} catch (
+
+		UnirestException e11) {
 
 			e11.printStackTrace();
 		}
@@ -709,9 +559,6 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		set_pickupId.clear();
 		set_price_alldata.clear();
 		set_allPickup_ID.clear();
-		set_click_BTN.clear();
-		get_TR_ID_Two.clear();
-		set_TR_ID_Two.clear();
 
 	}
 

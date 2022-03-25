@@ -5,7 +5,6 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.DataProvider;
 
 public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 
@@ -244,14 +243,6 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 		return YesClick;
 	}
 
-	@DataProvider(name = "data")
-	private Object[][] credentials() {
-		return new Object[][] { {
-				"https://www.amazon.in/ap/signin?openid.return_to=https%3A%2F%2Frelay.amazon.in%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_relay_desktop_in&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&pageId=amzn_relay_desktop_in&language=en_IN",
-				"mohanavelk@wowtruck.in", "wowtruck" } };
-
-	}
-
 	@FindBy(xpath = "(//*[@class='css-mah6cr'])[3]")
 	private WebElement clickMoreBtn;
 
@@ -266,4 +257,23 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 		return PickEndBtn;
 	}
 
+	public WebElement getGetFirstScroll() {
+		return getFirstScroll;
+	}
+
+	public List<WebElement> getGetSecondScroll() {
+		return getSecondScroll;
+	}
+
+	@FindBy(id = "filter-summary__result-summary")
+	private WebElement getFirstScroll;
+	@FindBy(xpath = "//*[@class='wo-card-footer']")
+	private List<WebElement> getSecondScroll;
+
+	@FindBy(xpath = "//*[@class='wo-card']/div/div[1]/div/div/div[1]/div[2]/p/span")
+	private List<WebElement> all_PickUp_TimeStamp;
+
+	public List<WebElement> getAll_PickUp_TimeStamp() {
+		return all_PickUp_TimeStamp;
+	}
 }
