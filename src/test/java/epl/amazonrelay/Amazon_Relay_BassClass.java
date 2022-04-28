@@ -10,6 +10,10 @@ import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -85,6 +89,18 @@ public class Amazon_Relay_BassClass {
 		String FileDate = sdf.format(timestamp).toString() + ".png";
 		File screenshotAs = tk.getScreenshotAs(OutputType.FILE);
 		File perm = new File(".//AmazonRelayBooking/" + trNum + "_" + FileDate);
+		try {
+			FileUtils.copyFile(screenshotAs, perm);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void screenShot() {
+		tk = (TakesScreenshot) driver;
+		File screenshotAs = tk.getScreenshotAs(OutputType.FILE);
+		File perm = new File(".//ScreenShot/picture" + System.currentTimeMillis() + ".png");
 		try {
 			FileUtils.copyFile(screenshotAs, perm);
 		} catch (IOException e) {
@@ -276,6 +292,23 @@ public class Amazon_Relay_BassClass {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
 
+	public static void email_Notification(String errorMessage) {
+		try {
+			Email email = new SimpleEmail();
+			email.setHostName("smtp.googlemail.com");
+			email.setSmtpPort(465);
+			email.setAuthenticator(new DefaultAuthenticator("murugans@wowtruck.in", "wowtruck#2021"));
+			email.setSSLOnConnect(true);
+			email.setFrom("murugans@wowtruck.in");
+			email.setSubject("Amazon Relay Notification Message");
+			email.setMsg(errorMessage);
+			email.addTo("murugans@wowtruck.in");
+			email.send();
+			System.out.println("Email has been sent to selva@wowtruck.in");
+		} catch (EmailException e1) {
+			e1.printStackTrace();
+		}
 	}
 }

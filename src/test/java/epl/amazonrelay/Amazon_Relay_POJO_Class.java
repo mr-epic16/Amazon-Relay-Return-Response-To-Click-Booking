@@ -243,7 +243,8 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 		return YesClick;
 	}
 
-	@FindBy(xpath = "(//*[@class='css-mah6cr'])[3]")
+	// *[text()="More filters"]
+	@FindBy(xpath = "//*[text()='More filters']")
 	private WebElement clickMoreBtn;
 
 	public WebElement getClickMoreBtn() {
@@ -276,4 +277,40 @@ public class Amazon_Relay_POJO_Class extends Amazon_Relay_BassClass {
 	public List<WebElement> getAll_PickUp_TimeStamp() {
 		return all_PickUp_TimeStamp;
 	}
+
+	@FindBy(xpath = "//*[@class='css-d5w1ep']/button[2]")
+	private WebElement stop_Point_Two;
+
+	public WebElement getStop_Point_Two() {
+		return stop_Point_Two;
+	}
+
+	@FindBy(xpath = "//*[@class='css-d5w1ep']/button[3]")
+	private WebElement stop_Point_Three;
+
+	public WebElement getStop_Point_Three() {
+		return stop_Point_Three;
+	}
+
+	@FindBy(xpath = "//*[@class='css-d5w1ep']/button[4]")
+	private WebElement stop_Point_Four;
+
+	public WebElement getStop_Point_Four() {
+		return stop_Point_Four;
+	}
+
+	@FindBy(xpath = "//*[@class='css-d5w1ep']/button[5]")
+	private WebElement stop_Point_Five;
+
+	public WebElement getStop_Point_Five() {
+		return stop_Point_Five;
+	}
+
+	@FindBy(xpath = "(//*[@class='css-14t83no'])[4]")
+	private WebElement stop_Point_Click;
+
+	public WebElement getstop_Point_Click() {
+		return stop_Point_Click;
+	}
+
 }

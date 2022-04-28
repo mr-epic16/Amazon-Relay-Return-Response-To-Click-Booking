@@ -16,7 +16,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
@@ -70,8 +69,9 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 	public static void launching() {
 		Properties launching_Credentials = property.credentials();
-		launchBrowser(launching_Credentials.getProperty("Wow.chromeType"));
-		launchUrl(launching_Credentials.getProperty("Wow.Amazon_Scearch_Url"));
+		launchBrowser(launching_Credentials.getProperty("Wow.chromeType").trim());
+		launchUrl(launching_Credentials.getProperty("Wow.Amazon_Url").trim());
+
 	}
 
 	@SuppressWarnings({ "unchecked", "unused", })
@@ -81,25 +81,42 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		Amazon_Relay_POJO_Class p = new Amazon_Relay_POJO_Class();
 		WebDriverWait wait_all_Elements = new WebDriverWait(driver, 20);
 		clickTheButton(p.getUsername());
-		fillTheText(p.getUsername(), login_Credentials.getProperty("Wow.Amazon_Username"));
+		fillTheText(p.getUsername(), login_Credentials.getProperty("Wow.Amazon_Username").trim());
 
 		clickTheButton(p.getPassword());
-		fillTheText(p.getPassword(), login_Credentials.getProperty("Wow.Amazon_UserPassword"));
+		fillTheText(p.getPassword(), login_Credentials.getProperty("Wow.Amazon_UserPassword").trim());
 
 		clickTheButton(p.getLogin());
 
-		// WebElement loadboard_Wait =
-		// wait_all_Elements.until(ExpectedConditions.elementToBeClickable(p.getLoadboard()));
-		// jsClick(loadboard_Wait);
-		//
-		// jsClick(p.getSearch());
+		WebElement loadboard_Wait = wait_all_Elements.until(ExpectedConditions.elementToBeClickable(p.getLoadboard()));
+		jsClick(loadboard_Wait);
+
+		jsClick(p.getSearch());
 
 		navigateRefresh();
 
+		clickTheButton(p.getClickMoreBtn());
+
+		clickTheButton(p.getstop_Point_Click());
+		String drop_points = login_Credentials.getProperty("Wow.Multi_Drop_Filter").trim();
+		switch (drop_points) {
+		case "2":
+			clickTheButton(p.getStop_Point_Two());
+			break;
+		case "3":
+			clickTheButton(p.getStop_Point_Three());
+			break;
+		case "4":
+			clickTheButton(p.getStop_Point_Four());
+			break;
+		case "5":
+			clickTheButton(p.getStop_Point_Five());
+			break;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM");
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
-		String property2 = login_Credentials.getProperty("Wow.Date_Filter_Decision");
+		String property2 = login_Credentials.getProperty("Wow.Date_Filter_Decision").trim();
 
 		Integer date_Decision = Integer.valueOf(property2);
 		c.add(Calendar.DATE, date_Decision);
@@ -460,14 +477,24 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 		}
 		System.out.println("Json all Data Size : " + amazon_Json_Objects.size());
 
-		String Response_Num = login_Credentials.getProperty("Wow.Amazon_API_return_response_status");
-		try {
-			/* These are Steps For ApI Conventions */
-			for (int i = 0; i < amazon_Json_Objects.size(); i++) {
-				String datas = amazon_Json_Objects.get(i);
+		String Response_Num = login_Credentials.getProperty("Wow.Amazon_API_return_response_status").trim();
+		String booking_Status = login_Credentials.getProperty("Wow.Amazon_Booking_Click_Decision").trim();
+		System.out.println("Booking Status : " + booking_Status);
 
-				HttpResponse<JsonNode> jsonresponse = Unirest.post(login_Credentials.getProperty("Wow.Amazon_API_Url"))
-						.header("Content-Type", "application/json").body(datas).asJson();
+		/* These are Steps For ApI Conventions */
+		for (int i = 0; i < amazon_Json_Objects.size(); i++) {
+			String datas = amazon_Json_Objects.get(i);
+			try {
+
+				/*
+				 * HttpResponse<JsonNode> jsonresponse =
+				 * Unirest.post(login_Credentials.getProperty("Wow.Amazon_API_Url").trim())
+				 * .header("Content-Type", "application/json").body(datas).asJson();
+				 */
+
+				HttpResponse<String> jsonresponse = Unirest
+						.post(login_Credentials.getProperty("Wow.Amazon_API_Url").trim())
+						.header("Content-Type", "application/json").body(datas).asString();
 
 				/* To Get into return API response body isn't Body Empty */
 				String json_body = jsonresponse.getBody().toString();
@@ -475,30 +502,37 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 
 				if (!json_body.equals("{}")) {
 
-					String status = jsonresponse.getBody().getObject().getJSONObject("response").get("status")
-							.toString();
+					/*
+					 * String status =
+					 * jsonresponse.getBody().getObject().getJSONObject("response").get("status")
+					 * .toString();
+					 */
 
 					/* to click return status code from API and Book button Click */
+					org.json.JSONObject jbody = new org.json.JSONObject(json_body);
+					String status = jbody.getJSONObject("response").get("status").toString();
+					// System.out.println("Status : " + status);
 
 					if (status.equals(Response_Num)) {
 
-						// org.json.JSONObject j = new org.json.JSONObject(datas);
-						// String string = j.get("tr_number").toString();
-						// org.json.JSONArray j1 = new org.json.JSONArray(string);
-						// String string2 = j1.get(0).toString();
+						/*
+						 * org.json.JSONObject j = new org.json.JSONObject(datas); String string =
+						 * j.get("tr_number").toString(); org.json.JSONArray j1 = new
+						 * org.json.JSONArray(string); String string2 = j1.get(0).toString();
+						 */
 
-						String string3 = set_TR_ID.get(i);
-						System.out.println("TR No : " + string3);
+						String Json_Tr_Id = set_TR_ID.get(i);
+						System.out.println("TR No : " + Json_Tr_Id);
 
 						/* get booking actual index from amazon relay to click */
 						int actual_booking_index = 0;
 						List<WebElement> get_CureentTR_Appears = p.getAll_TR_ID();
-						for (int i1 = i; i1 < get_CureentTR_Appears.size(); i1++) {
+						for (int i1 = 0; i1 < get_CureentTR_Appears.size(); i1++) {
 							WebElement webElement1 = get_CureentTR_Appears.get(i1);
 							String tRId = webElement1.getText();
-							String substring = tRId.substring(3);
+							String current_TR_ID_On_Amazon = tRId.substring(3);
 
-							if (substring.equalsIgnoreCase(string3)) {
+							if (current_TR_ID_On_Amazon.equalsIgnoreCase(Json_Tr_Id)) {
 								actual_booking_index = i1;
 								break;
 							}
@@ -509,29 +543,45 @@ public class Amazon_Relay_Scrept_Class extends Amazon_Relay_POJO_Class {
 						/* To check TR present or not */
 						List<WebElement> wait_Booking_click = wait_all_Elements
 								.until(ExpectedConditions.visibilityOfAllElements(p.getClickBooking()));
-						WebElement webElement2 = wait_Booking_click.get(actual_booking_index);
-						scrollDown(webElement2);
-						jsClick(webElement2);
-						System.out.println("Booking button clicked : " + actual_booking_index);
+						WebElement Booking_Index = wait_Booking_click.get(actual_booking_index);
+
+						/*
+						 * scrollDown(Booking_Index); captureScreenshot(Json_Tr_Id);
+						 */
+
+						System.out.println("Booking button clicked : " + i);
 
 						/* To Click Yes or No button for Booking Confirmation */
-						WebElement wait_no_button_click = wait_all_Elements
-								.until(ExpectedConditions.elementToBeClickable(p.getNoClick()));
-						String text = wait_no_button_click.getText();
-						System.out.println("Booking confirm button clicked : " + text);
-						jsClick(wait_no_button_click);
+						if (booking_Status.equalsIgnoreCase("Yes")) {
+							jsClick(Booking_Index);
+							WebElement wait_no_button_click = wait_all_Elements
+									.until(ExpectedConditions.elementToBeClickable(p.getNoClick()));
+							String text = wait_no_button_click.getText();
+							System.out.println("Booking confirm button clicked : " + text);
+							jsClick(wait_no_button_click);
 
-						captureScreenshot(string3);
+							/* captureScreenshot(Json_Tr_Id); */
+						} else if (booking_Status.equalsIgnoreCase("No")) {
+							jsClick(Booking_Index);
+							WebElement wait_no_button_click = wait_all_Elements
+									.until(ExpectedConditions.elementToBeClickable(p.getNoClick()));
+							String text = wait_no_button_click.getText();
+							System.out.println("Booking confirm button clicked : " + text);
+							jsClick(wait_no_button_click);
+
+							/* captureScreenshot(Json_Tr_Id); */
+						} else {
+							System.out.println("Do not want to click booking order on Amazon Relay");
+						}
 
 					}
 				}
+
+			} catch (
+
+			UnirestException e11) {
+				e11.printStackTrace();
 			}
-
-		} catch (
-
-		UnirestException e11) {
-
-			e11.printStackTrace();
 		}
 
 		/* TO clear all Linked list */
